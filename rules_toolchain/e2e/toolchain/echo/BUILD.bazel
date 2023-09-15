@@ -1,0 +1,40 @@
+load(":variable.bzl", "variable")
+
+toolchain_type(
+    name = "type",
+)
+
+toolchain(
+    name = "local",
+    toolchain = "//toolchain/echo/info:local",
+    toolchain_type = ":type",
+)
+
+alias(
+    name = "echo",
+    actual = "local",
+)
+
+variable(
+    name = "variable",
+    toolchain = ":type",
+)
+
+genrule(
+    name = "data",
+    testonly = True,
+    outs = ["hello-world.txt"],
+    cmd = "$(ECHO) 'Hello, world!' > $@",
+    toolchains = [":variable"],
+)
+
+sh_test(
+    name = "sh",
+    size = "small",
+    srcs = ["content.sh"],
+    args = [
+        "hello-world.txt",
+        "'Hello, world!'",
+    ],
+    data = [":data"],
+)

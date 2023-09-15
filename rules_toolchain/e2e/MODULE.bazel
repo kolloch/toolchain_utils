@@ -1,0 +1,15 @@
+module(
+    name = "e2e",
+)
+
+bazel_dep(name = "rules_toolchain", version = "0.0.0")
+local_path_override(
+    module_name = "rules_toolchain",
+    path = "..",
+)
+
+local = use_extension("@rules_toolchain//toolchain:extensions.bzl", "local")
+local.which(name = "echo")
+use_repo(local, "echo")
+
+register_toolchains("//toolchain/echo:all")

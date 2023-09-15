@@ -1,0 +1,6 @@
+load("@rules_toolchain//toolchain/local:defs.bzl", "info")
+
+info(
+    name = "local",
+    binary = "@echo//:echo",
+)
