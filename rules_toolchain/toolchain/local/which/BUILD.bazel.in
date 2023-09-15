@@ -1,0 +1,10 @@
+load("@rules_toolchain//toolchain/local:defs.bzl", "binary")
+
+package(default_visibility = ["//visibility:public"])
+
+binary(
+    name = "{{name}}",
+    program = "{{program}}",
+    path = "{{path}}",
+    variable = "{{variable}}",
+)

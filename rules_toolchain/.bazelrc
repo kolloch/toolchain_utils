@@ -1,0 +1,12 @@
+# Enable `bzlmod`
+common --enable_bzlmod
+common --registry https://bcr.bazel.build
+
+# Build cache
+build --experimental_guard_against_concurrent_changes
+
+# Use modern toolchain resolution
+build --incompatible_enable_cc_toolchain_resolution
+
+# User-specific .bazelrc
+try-import user.bazelrc

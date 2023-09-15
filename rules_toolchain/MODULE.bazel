@@ -1,0 +1,9 @@
+module(
+    name = "rules_toolchain",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.4.2", dev_dependency = True)
+
+local = use_extension("//toolchain:extensions.bzl", "local")
+local.which(name = "echo")
+use_repo(local, "echo")
