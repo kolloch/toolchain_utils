@@ -15,6 +15,7 @@ def implementation(ctx):
     binary = ctx.attr.binary[BinaryInfo]
     data = DataInfo(
         target = ctx.attr.binary,
+        executable = ctx.file.binary,
         env = {
             binary.variable: str(ctx.file.binary.path),
         },
