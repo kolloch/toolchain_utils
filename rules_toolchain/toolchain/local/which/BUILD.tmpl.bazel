@@ -4,7 +4,7 @@ package(default_visibility = ["//visibility:public"])
 
 binary(
     name = "{{name}}",
-    program = "{{program}}",
     path = "{{path}}",
+    program = "{{program}}",
     variable = "{{variable}}",
 )

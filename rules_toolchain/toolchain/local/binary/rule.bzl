@@ -13,7 +13,7 @@ ATTRS = {
     ),
     "template": attr.label(
         doc = "The template that is expanded into the binary.",
-        default = Label(":posix.sh.in"),
+        default = Label(":posix.tmpl.sh"),
         allow_single_file = True,
     ),
 }

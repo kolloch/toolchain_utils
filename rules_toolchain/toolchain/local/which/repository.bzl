@@ -10,7 +10,7 @@ ATTRS = {
     ),
     "template": attr.label(
         doc = "The template that is expanded into the `BUILD.bazel`.",
-        default = Label("//toolchain/local/which:BUILD.bazel.in"),
+        default = Label(":BUILD.tmpl.bazel"),
         allow_single_file = True,
     ),
 }

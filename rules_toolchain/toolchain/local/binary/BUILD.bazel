@@ -1,1 +1,1 @@
-exports_files(["posix.sh.in"])
+exports_files(["posix.tmpl.sh"])
