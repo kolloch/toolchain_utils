@@ -23,7 +23,7 @@ def implementation(rctx):
         fail("Cannot find `{}` on `PATH`".format(program))
 
     rctx.template("BUILD.bazel", rctx.attr.template, {
-        "{{name}}": program or rctx.attr.target,
+        "{{name}}": rctx.attr.target or program,
         "{{program}}": program,
         "{{path}}": str(path.realpath),
         "{{variable}}": rctx.attr.variable or program.upper(),
