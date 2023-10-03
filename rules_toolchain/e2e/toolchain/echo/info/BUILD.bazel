@@ -1,4 +1,4 @@
-load("@rules_toolchain//toolchain/local:defs.bzl", "info")
+load("@rules_toolchain//toolchain:defs.bzl", "info")
 
 info(
     name = "local",

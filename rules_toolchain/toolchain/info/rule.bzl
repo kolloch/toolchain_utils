@@ -1,5 +1,6 @@
-load("//toolchain/local/binary:BinaryInfo.bzl", "BinaryInfo")
-load("//toolchain/info:DataInfo.bzl", "DataInfo")
+load("@bazel_skylib//lib:structs.bzl", "structs")
+load(":TargetInfo.bzl", "TargetInfo")
+load(":DataInfo.bzl", "DataInfo")
 
 ATTRS = {
     "binary": attr.label(
@@ -7,23 +8,21 @@ ATTRS = {
         allow_single_file = True,
         mandatory = True,
         cfg = "exec",
-        providers = [BinaryInfo],
+        providers = [TargetInfo],
+        executable = True,
     ),
 }
 
 def implementation(ctx):
-    binary = ctx.attr.binary[BinaryInfo]
+    target = ctx.attr.binary[TargetInfo]
     data = DataInfo(
         target = ctx.attr.binary,
         executable = ctx.file.binary,
-        env = {
-            binary.variable: str(ctx.file.binary.path),
-        },
+        **{k: v for k, v in structs.to_dict(target).items()}
     )
     return [
         platform_common.ToolchainInfo(data = data),
         data,
-        binary,
     ]
 
 info = rule(
@@ -33,6 +32,5 @@ info = rule(
     provides = [
         platform_common.ToolchainInfo,
         DataInfo,
-        BinaryInfo,
     ],
 )
