@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+# TODO: add more CPU aliases when we are ready to support them.
+[
+    alias(
+        name = v,
+        actual = "@platforms//cpu:{}".format(v),
+    )
+    for v in (
+        "aarch64",
+        "x86_64",
+    )
+]

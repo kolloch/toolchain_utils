@@ -1,0 +1,17 @@
+load("@bazel_skylib//lib:sets.bzl", "sets")
+load(":common.bzl", "TRIPLETS")
+load(":rule.bzl", "triplet")
+load(":test.bzl", "test")
+
+[
+    triplet(
+        name = value,
+        visibility = ["//visibility:public"],
+    )
+    for value in sets.to_list(TRIPLETS)
+]
+
+test(
+    name = "test",
+    target_under_test = ":amd64-linux-gnu",
+)

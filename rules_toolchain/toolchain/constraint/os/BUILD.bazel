@@ -1,0 +1,12 @@
+package(default_visibility = ["//visibility:public"])
+
+# TODO: add more OS aliases when we are ready to support them.
+[
+    alias(
+        name = v,
+        actual = "@platforms//os:{}".format(v),
+    )
+    for v in (
+        "linux",
+    )
+]
