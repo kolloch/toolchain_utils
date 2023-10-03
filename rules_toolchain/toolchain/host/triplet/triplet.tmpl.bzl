@@ -1,3 +1,3 @@
-load("@rules_toolchain//toolchain:defs.bzl", "TripletInfo")
+load("@rules_toolchain//toolchain:defs.bzl", "ToolchainTripletInfo")
 
-TRIPLET = TripletInfo("{{value}}")
+TRIPLET = ToolchainTripletInfo("{{value}}")

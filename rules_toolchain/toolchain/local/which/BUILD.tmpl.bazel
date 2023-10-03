@@ -1,8 +1,8 @@
-load("@rules_toolchain//toolchain/local:defs.bzl", "binary")
+load("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_binary")
 
 package(default_visibility = ["//visibility:public"])
 
-binary(
+toolchain_local_binary(
     name = "{{name}}",
     path = "{{path}}",
     program = "{{program}}",

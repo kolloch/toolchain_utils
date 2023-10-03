@@ -1,6 +1,6 @@
-load("@rules_toolchain//toolchain:defs.bzl", "info")
+load("@rules_toolchain//toolchain:defs.bzl", "toolchain_info")
 
-info(
+toolchain_info(
     name = "local",
     binary = "@echo//:echo",
 )
