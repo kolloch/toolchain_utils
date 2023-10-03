@@ -1,0 +1,8 @@
+load("@host//:triplet.bzl", "TRIPLET")
+load("//toolchain/triplet:rule.bzl", "triplet")
+
+triplet(
+    name = "triplet",
+    value = TRIPLET.value,
+    visibility = ["//visibility:public"],
+)

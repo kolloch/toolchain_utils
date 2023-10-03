@@ -1,0 +1,66 @@
+load("//toolchain/triplet:VersionedInfo.bzl", "VersionedInfo")
+
+def _header(rctx, path):
+    """
+    Reads the Linux version header to determine the correct Linux version.
+
+    Args:
+      rctx: The repository context that can execute commands on the host machine.
+      path: the path to the Linux version header to read.
+
+    Returns:
+      The dot-separated version string.
+    """
+    data = rctx.read(path).strip()
+
+    def _split(line):
+        if not line.startswith("#define"):
+            return (None, None)
+
+        _, name, value = line.split(" ", 2)
+
+        if "(" in name:
+            return (None, None)
+
+        name = name.removeprefix("LINUX_VERSION_").lower()
+
+        return (name, value)
+
+    pairs = [_split(line) for line in data.splitlines()]
+    map = {k: v for k, v in pairs if k and v}
+
+    major = map.get("major", None)
+    minor = map.get("patchlevel", None)
+    patch = map.get("sublevel", None)
+
+    if major and minor and patch:
+        return VersionedInfo("linux.{}.{}.{}".format(int(major), int(minor), int(patch)))
+
+    if "code" not in map:
+        fail("Failed to find a `LINUX_VERSION_CODE` in {}".format(path))
+
+    code = int(map["code"])
+
+    major = (code >> 16) & 0xFF
+    minor = (code >> 8) & 0xFF
+    patch = (code >> 0) & 0xFF
+
+    return VersionedInfo("linux.{}.{}.{}".format(major, minor, patch))
+
+def os(rctx):
+    """
+    Detects the host operating system.
+
+    Args:
+      rctx: the repository context to use for detection.
+
+    Return:
+      A `VersionedInfo` operating system triplet part.
+    """
+    path = rctx.path("/usr/include/linux/version.h")
+    if path.exists:
+        return _header(rctx, path)
+
+    return VersionedInfo({
+        "linux": "linux",
+    }[rctx.os.name])
