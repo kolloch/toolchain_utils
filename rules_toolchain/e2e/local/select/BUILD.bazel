@@ -1,0 +1,8 @@
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+
+diff_test(
+    name = "hello-world",
+    size = "small",
+    file1 = "@fixture//:test/fixture/hello-world.txt",
+    file2 = "//test/fixture:hello-world.txt",
+)

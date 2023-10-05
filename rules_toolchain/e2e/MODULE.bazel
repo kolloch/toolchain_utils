@@ -14,3 +14,25 @@ local.which(name = "echo")
 use_repo(local, "echo")
 
 register_toolchains("//toolchain/echo:all")
+
+test = use_extension("//test:extension.bzl", "test")
+test.fixture(
+    name = "fixture-amd64-linux-gnu",
+)
+test.fixture(
+    name = "fixture-arm64-linux-gnu",
+)
+test.fixture(
+    name = "fixture-arm-linux-musl",
+)
+use_repo(test, "fixture-amd64-linux-gnu", "fixture-arm-linux-musl", "fixture-arm64-linux-gnu")
+
+local.select(
+    name = "fixture",
+    map = {
+        "@fixture-amd64-linux-gnu": "amd64-linux-gnu",
+        "@fixture-arm64-linux-gnu": "arm64-linux-gnu",
+        "@fixture-arm-linux-musl": "arm-linux-musl",
+    },
+)
+use_repo(local, "fixture")
