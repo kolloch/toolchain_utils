@@ -43,10 +43,7 @@ def _ldd(rctx, path):
         description, _, version = description.rpartition(") ")
         version = version
 
-        if description == "GNU libc":
-            return VersionedInfo("gnu.{}".format(version))
-
-        if description.startswith("Debian GLIBC"):
+        if description == "GNU libc" or "GLIBC" in description:
             return VersionedInfo("gnu.{}".format(version))
 
     fail("Failed to detect `{}` version:\n{}".format(path, result.stdout))
