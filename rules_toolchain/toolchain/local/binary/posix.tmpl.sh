@@ -9,9 +9,12 @@ EXECUTABLE="{{path}}"
 readonly EXECUTABLE
 
 # Validate the executable is...executable
-if ! test -x "${EXECUTABLE}"; then
-  echo >&2 "Not executable: ${EXECUTABLE}"
+if ! test -f "${EXECUTABLE}"; then
+  echo >&2 "Not found: ${EXECUTABLE}"
   exit 69
+elif ! test -x "${EXECUTABLE}"; then
+  echo >&2 "Not executable: ${EXECUTABLE}"
+  exit 123
 fi
 
 # Pass on the argument to the actual executable
