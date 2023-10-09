@@ -1,4 +1,5 @@
-load(":variable.bzl", "variable")
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load(":resolved.bzl", "resolved")
 
 toolchain_type(
     name = "type",
@@ -6,7 +7,7 @@ toolchain_type(
 
 toolchain(
     name = "local",
-    toolchain = "//toolchain/echo/info:local",
+    toolchain = "@echo//:echo",
     toolchain_type = ":type",
 )
 
@@ -15,8 +16,8 @@ alias(
     actual = "local",
 )
 
-variable(
-    name = "variable",
+resolved(
+    name = "resolved",
     toolchain = ":type",
 )
 
@@ -25,16 +26,11 @@ genrule(
     testonly = True,
     outs = ["hello-world.txt"],
     cmd = "$(ECHO) 'Hello, world!' > $@",
-    toolchains = [":variable"],
+    toolchains = [":resolved"],
 )
 
-sh_test(
-    name = "sh",
-    size = "small",
-    srcs = ["content.sh"],
-    args = [
-        "hello-world.txt",
-        "'Hello, world!'",
-    ],
-    data = [":data"],
+diff_test(
+    name = "diff",
+    file1 = ":data",
+    file2 = ":hello-world.txt",
 )

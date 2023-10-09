@@ -1,6 +1,3 @@
-load(":BinaryInfo.bzl", "BinaryInfo")
-load("//toolchain/info:TargetInfo.bzl", "TargetInfo")
-
 ATTRS = {
     "path": attr.string(
         doc = "The path to the local binary.",
@@ -17,47 +14,51 @@ ATTRS = {
         default = Label(":posix.tmpl.sh"),
         allow_single_file = True,
     ),
+    "data": attr.label_list(
+        doc = "Extra files that are needed at runtime.",
+        allow_files = True,
+    ),
 }
 
 def implementation(ctx):
     program = ctx.attr.program or ctx.label.name
-    binary = BinaryInfo(
-        program = program,
-        path = ctx.attr.path,
-        variable = ctx.attr.variable or program.upper(),
-    )
+    variable = ctx.attr.variable or program.upper()
 
-    output = ctx.actions.declare_file(binary.program)
+    executable = ctx.actions.declare_file("{}.sh".format(program))
     ctx.actions.expand_template(
         template = ctx.file.template,
-        output = output,
+        output = executable,
         substitutions = {
-            "{{path}}": binary.path,
+            "{{path}}": ctx.attr.path,
         },
         is_executable = True,
     )
 
-    target = TargetInfo(
-        env = {
-            binary.variable: output.path,
-        },
-    )
+    variables = platform_common.TemplateVariableInfo({
+        ctx.attr.variable or program.upper(): executable.path,
+    })
 
     default = DefaultInfo(
-        executable = output,
-        files = depset([output]),
-        runfiles = ctx.runfiles([output]),
+        executable = executable,
+        files = depset([executable]),
+        runfiles = ctx.runfiles(ctx.attr.data + [executable]),
     )
 
-    return [binary, target, default]
+    toolchain = platform_common.ToolchainInfo(
+        variables = variables,
+        default = default,
+        executable = executable,
+    )
+
+    return [variables, toolchain, default]
 
 binary = rule(
     doc = "Creates a executable binary target file around a local binary path",
     attrs = ATTRS,
     implementation = implementation,
     provides = [
-        BinaryInfo,
-        TargetInfo,
+        platform_common.TemplateVariableInfo,
+        platform_common.ToolchainInfo,
         DefaultInfo,
     ],
     executable = True,
