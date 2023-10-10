@@ -11,3 +11,14 @@ package(default_visibility = ["//visibility:public"])
         "x86_64",
     )
 ]
+
+[
+    alias(
+        name = name,
+        actual = actual,
+    )
+    for name, actual in (
+        ("arm64", "aarch64"),
+        ("amd64", "x86_64"),
+    )
+]
