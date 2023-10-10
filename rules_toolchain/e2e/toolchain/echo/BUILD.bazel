@@ -1,8 +1,14 @@
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load(":resolved.bzl", "resolved")
+load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_target")
 
 toolchain_type(
     name = "type",
+)
+
+toolchain_symlink_target(
+    name = "hermetic",
+    target = ":echo.sh",
 )
 
 toolchain(
@@ -13,7 +19,7 @@ toolchain(
 
 alias(
     name = "echo",
-    actual = "local",
+    actual = "hermetic",
 )
 
 resolved(
