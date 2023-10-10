@@ -1,18 +1,10 @@
 ATTRS = {
     "path": attr.string(
-        doc = "The path to the local binary.",
+        doc = "The path to a binary to symlink.",
         mandatory = True,
-    ),
-    "program": attr.string(
-        doc = "The name of the binary to found on PATH.",
     ),
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
-    ),
-    "template": attr.label(
-        doc = "The template that is expanded into the binary.",
-        default = Label(":posix.tmpl.sh"),
-        allow_single_file = True,
     ),
     "data": attr.label_list(
         doc = "Extra files that are needed at runtime.",
@@ -21,21 +13,16 @@ ATTRS = {
 }
 
 def implementation(ctx):
-    program = ctx.attr.program or ctx.label.name
-    variable = ctx.attr.variable or program.upper()
+    variable = ctx.attr.variable or ctx.file.target.basename
 
-    executable = ctx.actions.declare_file("{}.sh".format(program))
-    ctx.actions.expand_template(
-        template = ctx.file.template,
+    executable = ctx.actions.declare_symlink(ctx.label.name)
+    ctx.actions.symlink(
         output = executable,
-        substitutions = {
-            "{{path}}": ctx.attr.path,
-        },
-        is_executable = True,
+        target_path = ctx.attr.path,
     )
 
     variables = platform_common.TemplateVariableInfo({
-        ctx.attr.variable or program.upper(): executable.path,
+        variable: executable.path,
     })
 
     default = DefaultInfo(
@@ -52,8 +39,8 @@ def implementation(ctx):
 
     return [variables, toolchain, default]
 
-binary = rule(
-    doc = "Creates a executable binary target file around a local binary path",
+path = rule(
+    doc = "Creates a executable symlink to a binary path.",
     attrs = ATTRS,
     implementation = implementation,
     provides = [

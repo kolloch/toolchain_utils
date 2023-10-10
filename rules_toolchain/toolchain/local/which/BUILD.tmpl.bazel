@@ -1,10 +1,9 @@
-load("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_binary")
+load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_path")
 
 package(default_visibility = ["//visibility:public"])
 
-toolchain_local_binary(
+toolchain_symlink_path(
     name = "{{name}}",
     path = "{{path}}",
-    program = "{{program}}",
     variable = "{{variable}}",
 )
