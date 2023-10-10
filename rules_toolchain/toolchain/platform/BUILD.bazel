@@ -1,0 +1,16 @@
+load("//toolchain/triplet:common.bzl", "TRIPLETS")
+
+[
+    platform(
+        name = t.value,
+        constraint_values = t.constraints,
+        visibility = ["//visibility:public"],
+    )
+    for t in TRIPLETS
+]
+
+alias(
+    name = "host",
+    actual = "//toolchain/host:platform",
+    visibility = ["//visibility:public"],
+)
