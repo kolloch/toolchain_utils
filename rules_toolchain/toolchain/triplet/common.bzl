@@ -1,6 +1,6 @@
-load("@bazel_skylib//lib:sets.bzl", "sets")
+load(":TripletInfo.bzl", "TripletInfo")
 
-TRIPLETS = sets.make((
-    "arm64-linux-gnu",
-    "amd64-linux-gnu",
-))
+TRIPLETS = (
+    TripletInfo("arm64-linux-gnu"),
+    TripletInfo("amd64-linux-gnu"),
+)
