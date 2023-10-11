@@ -32,7 +32,16 @@ def implementation(ctx):
     return [triplet, default]
 
 triplet = rule(
-    doc = "Provies a machine triplet",
+    doc = """Provides a machine triplet.
+
+A simple rule that provides a `ToolchainTripletInfo` provider.
+
+The resulting provider can be used in other rules to understand triplet values.
+
+Running the target with `bazel run` will result in the triplet being printed.
+
+The triplet runnable output is particularly useful for the resolved host triplet at `@rules_toolchain//toolchain/triplet:host`
+""",
     attrs = ATTRS,
     implementation = implementation,
     provides = [

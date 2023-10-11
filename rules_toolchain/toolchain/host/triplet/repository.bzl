@@ -1,5 +1,8 @@
 load(":detect.bzl", "detect")
 
+DOC = """Detects the host triplet.
+"""
+
 ATTRS = {
     "template": attr.label(
         doc = "The template that is expanded into the `triplet.bzl`.",
@@ -16,7 +19,7 @@ def implementation(rctx):
     rctx.file("BUILD.bazel", "")
 
 triplet = repository_rule(
-    doc = "Detects the host triplet.",
+    doc = DOC,
     implementation = implementation,
     attrs = ATTRS,
     local = True,

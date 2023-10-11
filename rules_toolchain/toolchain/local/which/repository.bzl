@@ -1,3 +1,20 @@
+DOC = """Creates a repository that provides a binary target wrapping a local binary found on `PATH`.
+
+The resulting repository has a `toolchain_symlink_path` target which can be used with the native `toolchain` rule to expose the local binary as a toolchain.
+
+Assuming a repository created as `name = "echo"`, by default the `echo` binary will be search for an the nested target will be named `:echo`.
+
+Consuming this target as a toolchain is trivial:
+
+```py
+toolchain(
+    name = "local",
+    toolchain = "@echo",
+    toolchain_type = ":type",
+)
+```
+"""
+
 ATTRS = {
     "program": attr.string(
         doc = "The name of the binary to find on `PATH`.",
@@ -30,7 +47,7 @@ def implementation(rctx):
     })
 
 which = repository_rule(
-    doc = "Creates a repository that provides a binary target wrapping a local binary found on `PATH`.",
+    doc = DOC,
     implementation = implementation,
     attrs = ATTRS,
     configure = True,
