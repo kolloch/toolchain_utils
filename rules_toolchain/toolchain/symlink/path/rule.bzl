@@ -3,6 +3,9 @@ ATTRS = {
         doc = "The path to a binary to symlink.",
         mandatory = True,
     ),
+    "basename": attr.string(
+        doc = "The basename for the symlink, which defaults to `name`",
+    ),
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
     ),
@@ -13,9 +16,10 @@ ATTRS = {
 }
 
 def implementation(ctx):
-    variable = ctx.attr.variable or ctx.file.target.basename
+    basename = ctx.attr.basename or ctx.label.name
+    variable = ctx.attr.variable or basename.upper()
 
-    executable = ctx.actions.declare_symlink(ctx.label.name)
+    executable = ctx.actions.declare_symlink(basename)
     ctx.actions.symlink(
         output = executable,
         target_path = ctx.attr.path,

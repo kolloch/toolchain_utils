@@ -6,6 +6,9 @@ ATTRS = {
         executable = True,
         cfg = "exec",
     ),
+    "basename": attr.string(
+        doc = "The basename for the symlink, which defaults to `name`",
+    ),
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
     ),
@@ -16,13 +19,13 @@ ATTRS = {
 }
 
 def implementation(ctx):
-    target = ctx.files.target[0]
-    variable = ctx.attr.variable or target.basename.upper()
+    basename = ctx.attr.basename or ctx.label.name
+    variable = ctx.attr.variable or basename.upper()
 
-    executable = ctx.actions.declare_file(ctx.label.name)
+    executable = ctx.actions.declare_file(basename)
     ctx.actions.symlink(
         output = executable,
-        target_file = target,
+        target_file = ctx.files.target[0],
         is_executable = True,
     )
 

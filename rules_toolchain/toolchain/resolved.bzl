@@ -5,6 +5,9 @@ PROVIDES = (
 )
 
 ATTRS = {
+    "basename": attr.string(
+        doc = "The basename for the symlink, which defaults to `name`",
+    ),
     "toolchain": attr.label(
         doc = "The toolchain type to resolve and forward on providers.",
         mandatory = True,
@@ -12,9 +15,10 @@ ATTRS = {
 }
 
 def implementation(ctx):
+    basename = ctx.attr.basename or ctx.label.name
     toolchain = ctx.toolchains[ctx.attr.toolchain.label]
 
-    executable = ctx.actions.declare_file("toolchain-resolved-{}".format(ctx.label.name))
+    executable = ctx.actions.declare_file(basename)
     ctx.actions.symlink(
         output = executable,
         target_file = toolchain.executable,
