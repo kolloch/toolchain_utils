@@ -10,7 +10,7 @@ load("//toolchain/triplet:common.bzl", "TRIPLETS")
 ]
 
 alias(
-    name = "host",
-    actual = "//toolchain/host:platform",
+    name = "local",
+    actual = "//toolchain/local:platform",
     visibility = ["//visibility:public"],
 )

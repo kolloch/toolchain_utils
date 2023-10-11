@@ -24,3 +24,9 @@ triplet = repository_rule(
     attrs = ATTRS,
     local = True,
 )
+
+export = struct(
+    doc = DOC,
+    attrs = ATTRS,
+    rule = triplet,
+)

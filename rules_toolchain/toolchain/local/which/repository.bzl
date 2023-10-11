@@ -55,3 +55,9 @@ which = repository_rule(
         "PATH",
     ],
 )
+
+export = struct(
+    doc = DOC,
+    attrs = ATTRS,
+    rule = which,
+)

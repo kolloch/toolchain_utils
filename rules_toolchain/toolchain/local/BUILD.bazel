@@ -1,0 +1,20 @@
+load("@local//:triplet.bzl", "TRIPLET")
+load("//toolchain/triplet:rule.bzl", "triplet")
+
+triplet(
+    name = "triplet",
+    value = TRIPLET.value,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "constraint",
+    constraint_values = TRIPLET.constraints,
+    visibility = ["//visibility:public"],
+)
+
+platform(
+    name = "platform",
+    constraint_values = TRIPLET.constraints,
+    visibility = ["//visibility:public"],
+)

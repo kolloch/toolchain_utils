@@ -5,8 +5,8 @@ module(
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(name = "platforms", version = "0.0.7")
 
-host = use_extension("//toolchain/host:extension.bzl", "host")
-host.triplet(
-    name = "host",
+local = use_extension("//toolchain:extensions.bzl", "local")
+local.triplet(
+    name = "local",
 )
-use_repo(host, "host")
+use_repo(local, "local")

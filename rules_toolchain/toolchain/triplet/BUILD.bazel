@@ -11,8 +11,8 @@ load(":test.bzl", "test")
 ]
 
 alias(
-    name = "host",
-    actual = "//toolchain/host:triplet",
+    name = "local",
+    actual = "//toolchain/local:triplet",
     visibility = ["//visibility:public"],
 )
 
