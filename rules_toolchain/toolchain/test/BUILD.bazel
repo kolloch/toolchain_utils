@@ -1,0 +1,9 @@
+exports_files(["posix.tmpl.sh"])
+
+exports_files(
+    [
+        "non-empty",
+        "empty",
+    ],
+    visibility = ["//visibility:public"],
+)

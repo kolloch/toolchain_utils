@@ -1,6 +1,5 @@
-load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load(":resolved.bzl", "resolved")
-load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_target")
+load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_target", "toolchain_test")
 
 toolchain_type(
     name = "type",
@@ -27,16 +26,9 @@ resolved(
     toolchain = ":type",
 )
 
-genrule(
-    name = "data",
-    testonly = True,
-    outs = ["hello-world.txt"],
-    cmd = "$(ECHO) 'Hello, world!' > $@",
+toolchain_test(
+    name = "test",
+    args = ["Hello, world!"],
+    stdout = ":hello-world.txt",
     toolchains = [":resolved"],
-)
-
-diff_test(
-    name = "diff",
-    file1 = ":data",
-    file2 = ":hello-world.txt",
 )
