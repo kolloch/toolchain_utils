@@ -2,7 +2,7 @@ ATTRS = {
     "target": attr.label(
         doc = "The binary file to symlink.",
         mandatory = True,
-        allow_single_file = True,
+        allow_files = True,
         executable = True,
         cfg = "exec",
     ),
@@ -16,12 +16,13 @@ ATTRS = {
 }
 
 def implementation(ctx):
-    variable = ctx.attr.variable or ctx.file.target.basename
+    target = ctx.files.target[0]
+    variable = ctx.attr.variable or target.basename.upper()
 
     executable = ctx.actions.declare_file(ctx.label.name)
     ctx.actions.symlink(
         output = executable,
-        target_file = ctx.file.target,
+        target_file = target,
         is_executable = True,
     )
 
