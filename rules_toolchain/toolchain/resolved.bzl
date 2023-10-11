@@ -1,3 +1,9 @@
+PROVIDES = (
+    platform_common.TemplateVariableInfo,
+    platform_common.ToolchainInfo,
+    DefaultInfo,
+)
+
 ATTRS = {
     "toolchain": attr.label(
         doc = "The toolchain type to resolve and forward on providers.",
@@ -15,7 +21,7 @@ def implementation(ctx):
         is_executable = True,
     )
 
-    files = depset([executable])
+    files = depset([executable], transitive = [toolchain.default.files])
     runfiles = ctx.runfiles()
     runfiles = runfiles.merge(toolchain.default.default_runfiles)
 
@@ -31,66 +37,57 @@ def implementation(ctx):
         default,
     ]
 
-# This rule is useless by itself
-# A toolchain type to resolve needs to be declared
-# The `ATTRS` and `implementation` can be reused
-# It is needed to work around the toolchain resolution step of Bazel[1]
-# https://github.com/bazelbuild/bazel/issues/14009
-resolved = rule(
-    doc = """Provides template variable information for a toolchain.
+def macro(*, toolchain):
+    """
+    Provides template variable information for a toolchain.
 
-This rule is useless by itself and is a workaround for Bazel toolchain resolution[1].
-
-When creating a toolchain, to provide the resolved toolchain create a `resolved.bzl` file:
+    When creating a toolchain, to provide the resolved toolchain create a `resolved.bzl` file:
 
 
-    load(
-        "@rules_toolchain//toolchain:resolved.bzl",
-        _ATTRS = "ATTRS",
-        _implementation = "implementation"
-    )
+        load(
+            "@rules_toolchain//toolchain:resolved.bzl",
+            _ATTRS = "ATTRS",
+            _implementation = "implementation"
+            _rule = "macro",
+        )
 
-    ATTRS = _ATTRS
+        ATTRS = _ATTRS
 
-    implementation = _implementation
+        implementation = _implementation
 
-    resolved = rule(
-        doc = "Resolved toolchain information for a `xxx` toolchain.",
+        resolved = _rule(
+            toolchain = Label("//coreutils/toolchain/cp:type"),
+        )
+
+    This rule can then be used to provide the resolved toolchain:
+
+        load(":resolved.bzl", "resolved")
+
+        toolchain_type(
+            name = ":type",
+        )
+
+        # Some `toolchain` rules that are registered
+
+        resolved(
+            name = "resolved",
+            toolchain = ":type",
+        )
+
+    The resolved target is runnable with `bazelisk run`.
+
+    [1]: https://github.com/bazelbuild/bazel/issues/14009
+    """
+    return rule(
+        doc = """Resolved toolchain information for the `{toolchain}` toolchain.
+
+This target is runnable via:
+
+    bazelisk run -- {toolchain} <args>
+""".format(toolchain = toolchain),
         attrs = ATTRS,
         implementation = implementation,
-        provides = [
-            platform_common.TemplateVariableInfo,
-            platform_common.ToolchainInfo,
-            DefaultInfo,
-        ],
-        toolchains = ["//yyy/toolchain/xxx:type"],
+        provides = PROVIDES,
+        toolchains = [toolchain],
         executable = True,
     )
-
-This rule can then be used to provide the resolved toolchain:
-
-    load(":resolved.bzl", "resolved")
-
-    toolchain_type(
-        name = ":type",
-    )
-
-    # Some `toolchain` rules
-
-    resolved(
-        name = "resolved",
-        toolchain = ":type",
-    )
-
-[1]: https://github.com/bazelbuild/bazel/issues/14009
-""",
-    attrs = ATTRS,
-    implementation = implementation,
-    provides = [
-        platform_common.TemplateVariableInfo,
-        platform_common.ToolchainInfo,
-        DefaultInfo,
-    ],
-    executable = True,
-    # toolchains = ["//your/toolchain/type"],
-)
