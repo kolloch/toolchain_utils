@@ -5,5 +5,6 @@ package(default_visibility = ["//visibility:public"])
 toolchain_symlink_path(
     name = "{{name}}",
     path = "{{path}}",
+    tags = ["no-remote"],
     variable = "{{variable}}",
 )
