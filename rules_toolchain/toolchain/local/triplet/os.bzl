@@ -1,3 +1,4 @@
+load("//toolchain/triplet:split.bzl", "split")
 load("//toolchain/triplet:VersionedInfo.bzl", "VersionedInfo")
 
 def _header(rctx, path):
@@ -9,7 +10,7 @@ def _header(rctx, path):
       path: the path to the Linux version header to read.
 
     Returns:
-      The dot-separated version string.
+      The `VersionedInfo` provider
     """
     data = rctx.read(path).strip()
 
@@ -47,6 +48,34 @@ def _header(rctx, path):
 
     return VersionedInfo("linux.{}.{}.{}".format(major, minor, patch))
 
+def _uname(rctx, path):
+    """
+    Determines the operating system version from `uname`
+
+    Args:
+      rctx: The repository context that can execute commands on the host machine.
+      path: the path to the `uname` executable.
+
+    Returns:
+      The `VersionedInfo` provider
+    """
+    result = rctx.execute((path, "-r"))
+    if result.return_code != 0:
+        fail("Failed to get `uname` release: {}".format(result.stderr))
+
+    version, _ = result.stdout.split("-", 1)
+
+    major, minor, patch = split(version, ".", {
+        1: lambda x: (x, None, None),
+        2: lambda x, y: (x, y, None),
+        3: lambda x, y, z: (x, y, z),
+    })
+
+    if rctx.path("/.dockerenv").exists:
+        print("`uname` release is the host kernel inside a container.")
+
+    return VersionedInfo("linux.{}.{}.{}".format(int(major), int(minor), int(patch)))
+
 def os(rctx):
     """
     Detects the host operating system.
@@ -60,6 +89,10 @@ def os(rctx):
     path = rctx.path("/usr/include/linux/version.h")
     if path.exists:
         return _header(rctx, path)
+
+    path = rctx.which("uname")
+    if path.exists:
+        return _uname(rctx, path)
 
     return VersionedInfo({
         "linux": "linux",
