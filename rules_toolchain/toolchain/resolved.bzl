@@ -1,3 +1,10 @@
+DOC = """Resolved toolchain information for the `{toolchain}` toolchain.
+
+This target is runnable via:
+
+    bazelisk run -- {toolchain} <args>
+"""
+
 PROVIDES = (
     platform_common.TemplateVariableInfo,
     platform_common.ToolchainInfo,
@@ -41,57 +48,59 @@ def implementation(ctx):
         default,
     ]
 
-def macro(*, toolchain):
-    """
-    Provides template variable information for a toolchain.
+def macro(*, toolchain_type):
+    """Provides a executable `rule` to resolve a toolchain.
 
-    When creating a toolchain, to provide the resolved toolchain create a `resolved.bzl` file:
+    To provide the resolved toolchain create a `resolved.bzl` file:
 
+    ```py
+    load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
 
-        load(
-            "@rules_toolchain//toolchain:resolved.bzl",
-            _ATTRS = "ATTRS",
-            _implementation = "implementation"
-            _rule = "macro",
-        )
+    DOC = _resolved.doc.format(toolchain="cp")
 
-        ATTRS = _ATTRS
+    ATTRS = _resolve.attrs
 
-        implementation = _implementation
+    implementation = _resolved.implementation
 
-        resolved = _rule(
-            toolchain = Label("//coreutils/toolchain/cp:type"),
-        )
+    resolved = _resolved.rule(
+        toolchain_type = Label("//coreutils/toolchain/cp:type"),
+    )
+    ```
 
     This rule can then be used to provide the resolved toolchain:
 
-        load(":resolved.bzl", "resolved")
+    ```py
+    load(":resolved.bzl", "resolved")
 
-        toolchain_type(
-            name = ":type",
-        )
+    toolchain_type(
+        name = ":type",
+    )
 
-        # Some `toolchain` rules that are registered
+    # Some `toolchain` rules that are registered
 
-        resolved(
-            name = "resolved",
-            toolchain = ":type",
-        )
+    resolved(
+        name = "resolved",
+        toolchain = ":type",
+    )
+    ```
 
-    The resolved target is runnable with `bazelisk run`.
-
-    [1]: https://github.com/bazelbuild/bazel/issues/14009
+    The resulting `resolved` target is runnable via `bazelisk run`.
     """
+    if type(toolchain_type) != type(Label("//:all")):
+        fail("`toolchain_type` must be passed as a `Label`: {}".format(type(toolchain_type)))
+
     return rule(
-        doc = """Resolved toolchain information for the `{toolchain}` toolchain.
-
-This target is runnable via:
-
-    bazelisk run -- {toolchain} <args>
-""".format(toolchain = toolchain),
+        doc = DOC.format(toolchain = toolchain_type),
         attrs = ATTRS,
         implementation = implementation,
         provides = PROVIDES,
-        toolchains = [toolchain],
+        toolchains = [toolchain_type],
         executable = True,
     )
+
+export = struct(
+    doc = DOC,
+    attrs = ATTRS,
+    implementation = implementation,
+    rule = macro,
+)

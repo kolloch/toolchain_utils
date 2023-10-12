@@ -1,9 +1,11 @@
-load("@rules_toolchain//toolchain:resolved.bzl", _ATTRS = "ATTRS", _implementation = "implementation", _rule = "macro")
+load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
 
-ATTRS = _ATTRS
+DOC = _resolved.doc.format(toolchain = "echo")
 
-implementation = _implementation
+ATTRS = _resolved.attrs
 
-resolved = _rule(
-    toolchain = Label("//toolchain/echo:type"),
+implementation = _resolved.implementation
+
+resolved = _resolved.rule(
+    toolchain_type = Label("//toolchain/echo:type"),
 )
