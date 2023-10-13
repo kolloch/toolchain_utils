@@ -1,4 +1,4 @@
-load(":triplets.bzl", "TRIPLETS")
+load(":triplets.bzl", "UNVERSIONED")
 load(":rule.bzl", "triplet")
 load(":test.bzl", "test")
 
@@ -7,7 +7,7 @@ load(":test.bzl", "test")
         name = t.value,
         visibility = ["//visibility:public"],
     )
-    for t in TRIPLETS
+    for t in UNVERSIONED
 ]
 
 alias(
