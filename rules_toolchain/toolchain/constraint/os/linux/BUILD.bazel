@@ -1,12 +1,8 @@
-load("@local//:triplet.bzl", "TRIPLET")
-load("@bazel_skylib//lib:sets.bzl", "sets")
+load(":versions.bzl", "VERSIONS")
 
 package(default_visibility = ["//visibility:public"])
 
 constraint_setting(name = "linux")
-
-# TODO: figure out a way to generate these
-VERSIONS = sets.to_list(sets.make(() + (TRIPLET.os.version.value,) if TRIPLET.os.version else ()))
 
 [
     constraint_value(
