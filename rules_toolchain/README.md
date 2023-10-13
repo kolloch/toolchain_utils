@@ -24,7 +24,6 @@ Use `rules_download` to provide a hermetic, pre-built binary in `MODULE.bazel`
 
 ```py
 download = use_extension("@rules_download//download:extensions.bzl", "download")
-download = use_extension("@rules_download//download:extensions.bzl", "download")
 download.archive(
     name = "coreutils-arm64-linux-gnu",
     srcs = ["coreutils"],
