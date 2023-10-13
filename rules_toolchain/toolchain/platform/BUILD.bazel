@@ -1,4 +1,4 @@
-load("//toolchain/triplet:common.bzl", "TRIPLETS")
+load("//toolchain/triplet:triplets.bzl", "TRIPLETS")
 
 [
     platform(

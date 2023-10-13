@@ -1,4 +1,4 @@
-load(":common.bzl", "TRIPLETS")
+load(":triplets.bzl", "TRIPLETS")
 load(":rule.bzl", "triplet")
 load(":test.bzl", "test")
 
