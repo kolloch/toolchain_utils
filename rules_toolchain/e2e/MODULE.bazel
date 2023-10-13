@@ -10,6 +10,7 @@ local_path_override(
 )
 
 local = use_extension("@rules_toolchain//toolchain:extensions.bzl", "local")
+use_repo(local, "local")
 local.which(name = "echo")
 use_repo(local, "echo")
 
