@@ -1,3 +1,5 @@
+visibility("//toolchain/...")
+
 # git ls-remote --tags https://sourceware.org/git/glibc.git |
 #   awk '{print $2}' |
 #   grep -oe 'glibc-2\.[0-9]\+\(\.[0-9]\+\)\?$' |

@@ -1,5 +1,7 @@
-load("//toolchain/triplet:VersionedInfo.bzl", "VersionedInfo")
 load("//toolchain/triplet:split.bzl", "split")
+load("//toolchain/triplet:VersionedInfo.bzl", "VersionedInfo")
+
+visibility("//toolchain/local/triplet/...")
 
 def _unquote(value):
     if value[0] == '"' and value[-1] == '"':

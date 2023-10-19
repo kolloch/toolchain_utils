@@ -1,3 +1,5 @@
+visibility("//toolchain/...")
+
 def split(value, delimiter, map):
     """
     Splits a value and invokes a callback based on the number of split elements.

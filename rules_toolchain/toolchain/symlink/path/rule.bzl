@@ -1,3 +1,5 @@
+visibility("//toolchain/...")
+
 ATTRS = {
     "path": attr.string(
         doc = "The path to a binary to symlink.",

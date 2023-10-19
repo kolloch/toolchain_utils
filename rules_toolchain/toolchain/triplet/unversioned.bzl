@@ -1,5 +1,7 @@
 load(":TripletInfo.bzl", "TripletInfo")
 
+visibility("//toolchain/...")
+
 def unversioned(triplet):
     """
     Converts a `TripletInfo` into an unversioned one.

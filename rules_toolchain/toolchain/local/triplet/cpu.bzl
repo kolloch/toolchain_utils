@@ -1,3 +1,5 @@
+visibility("//toolchain/local/triplet/...")
+
 def cpu(rctx):
     """
     Detects the host CPU.

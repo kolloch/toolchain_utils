@@ -1,3 +1,5 @@
+visibility("//toolchain/...")
+
 ATTRS = {
     "stdout": attr.label(
         doc = """The expected standard output.

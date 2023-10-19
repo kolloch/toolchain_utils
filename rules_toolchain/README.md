@@ -9,9 +9,8 @@
 Add the following to `MODULE.bazel`:
 
 ```py
-local = use_extension("@rules_toolchain//toolchain:extensions.bzl", "local")
-local.which("echo")
-use_repo(local, "echo")
+which = use_repo_rule("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_which")
+which("echo")
 ```
 
 The `echo` tool will be found on the `PATH`.
@@ -23,15 +22,14 @@ A repository with the `@echo//:echo` target will be created.
 Use `rules_download` to provide a hermetic, pre-built binary in `MODULE.bazel`
 
 ```py
-download = use_extension("@rules_download//download:extensions.bzl", "download")
-download.archive(
+archive = use_repo_rule("@rules_download//download:defs.bzl", "download_archive")
+archive(
     name = "coreutils-arm64-linux-gnu",
     srcs = ["coreutils"],
     integrity = "sha256-mlmkbeabyu4+5+cFiUSL6Ki4KFNqWu48gTjFc3NS43g=",
     strip_prefix = "coreutils-0.0.21-aarch64-unknown-linux-gnu",
     urls = ["https://github.com/uutils/coreutils/releases/download/0.0.21/coreutils-0.0.21-aarch64-unknown-linux-gnu.tar.gz"],
 )
-use_repo(download, "coreutils-arm64-linux-gnu")
 ```
 
 A repository with the `@coreutils-arm64-linux-gnu//:coreutils` target will be created.
@@ -103,6 +101,8 @@ Create `toolchain/echo/resolved.bzl` to provide the `resolved` rule that is used
 
 ```py
 load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
+
+visibility("toolchain/echo/...")
 
 DOC = _resolved.doc
 

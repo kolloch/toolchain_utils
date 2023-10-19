@@ -1,3 +1,5 @@
+visibility("//toolchain/...")
+
 DOC = """Creates a repository that provides a binary target wrapping a local binary found on `PATH`.
 
 The resulting repository has a `toolchain_symlink_path` target which can be used with the native `toolchain` rule to expose the local binary as a toolchain.
@@ -54,10 +56,4 @@ which = repository_rule(
     environ = [
         "PATH",
     ],
-)
-
-export = struct(
-    doc = DOC,
-    attrs = ATTRS,
-    rule = which,
 )

@@ -2,6 +2,8 @@ load("@bazel_skylib//lib:unittest.bzl", "analysistest", "asserts")
 load(":TripletInfo.bzl", "TripletInfo")
 load(":unversioned.bzl", "unversioned")
 
+visibility("//toolchain/test/...")
+
 def implementation(ctx):
     env = analysistest.begin(ctx)
     target = analysistest.target_under_test(env)

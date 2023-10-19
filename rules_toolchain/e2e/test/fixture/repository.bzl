@@ -1,5 +1,7 @@
 DOC = "Creates a test fixture repository."
 
+visibility("//...")
+
 ATTRS = {
     "srcs": attr.label_list(
         doc = "Files that should be put into the repository.",
@@ -27,10 +29,4 @@ fixture = repository_rule(
     implementation = implementation,
     attrs = ATTRS,
     configure = True,
-)
-
-export = struct(
-    doc = DOC,
-    attrs = ATTRS,
-    rule = fixture,
 )

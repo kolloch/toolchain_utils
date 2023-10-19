@@ -1,3 +1,5 @@
+visibility("public")
+
 DOC = """Resolved toolchain information for the `{toolchain}` toolchain.
 
 This target is runnable via:

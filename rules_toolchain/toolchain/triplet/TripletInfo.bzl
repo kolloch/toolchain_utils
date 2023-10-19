@@ -2,6 +2,8 @@ load("@bazel_skylib//lib:types.bzl", "types")
 load(":VersionedInfo.bzl", "VersionedInfo")
 load(":split.bzl", "split")
 
+visibility("//toolchain/...")
+
 def init(value):
     """
     Initializes a `TripletInfo` provider.

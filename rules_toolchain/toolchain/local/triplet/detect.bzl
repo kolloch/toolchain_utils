@@ -3,6 +3,8 @@ load(":cpu.bzl", "cpu")
 load(":os.bzl", "os")
 load(":libc.bzl", "libc")
 
+visibility("//toolchain/local/...")
+
 def detect(rctx):
     return TripletInfo("{}-{}-{}".format(
         cpu(rctx),

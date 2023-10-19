@@ -1,6 +1,8 @@
 load("@bazel_skylib//lib:types.bzl", "types")
 load(":VersionInfo.bzl", "VersionInfo")
 
+visibility("//toolchain/...")
+
 def init(value):
     """
     Initializes a `VersionedInfo` provider.

@@ -1,5 +1,8 @@
 module(
     name = "e2e",
+    bazel_compatibility = [
+        ">=6.4.0",
+    ],
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
@@ -9,31 +12,33 @@ local_path_override(
     path = "..",
 )
 
-local = use_extension("@rules_toolchain//toolchain:extensions.bzl", "local")
-use_repo(local, "local")
-local.which(name = "echo")
-use_repo(local, "echo")
+which = use_repo_rule("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_which")
+
+which(name = "echo")
 
 register_toolchains("//toolchain/echo:all")
 
-test = use_extension("//test:extension.bzl", "test")
-test.fixture(
+fixture = use_repo_rule("//test/fixture:repository.bzl", "fixture")
+
+fixture(
     name = "fixture-amd64-linux-gnu",
 )
-test.fixture(
+
+fixture(
     name = "fixture-arm64-linux-gnu",
 )
-test.fixture(
+
+fixture(
     name = "fixture-arm-linux-musl",
 )
-use_repo(test, "fixture-amd64-linux-gnu", "fixture-arm-linux-musl", "fixture-arm64-linux-gnu")
 
-local.select(
+select = use_repo_rule("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_select")
+
+select(
     name = "fixture",
     map = {
-        "@fixture-amd64-linux-gnu": "amd64-linux-gnu",
-        "@fixture-arm64-linux-gnu": "arm64-linux-gnu",
-        "@fixture-arm-linux-musl": "arm-linux-musl",
+        "amd64-linux-gnu": "@fixture-amd64-linux-gnu",
+        "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
+        "arm-linux-musl": "@fixture-arm-linux-musl",
     },
 )
-use_repo(local, "fixture")

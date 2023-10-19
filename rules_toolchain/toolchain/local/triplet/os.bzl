@@ -1,6 +1,8 @@
 load("//toolchain/triplet:split.bzl", "split")
 load("//toolchain/triplet:VersionedInfo.bzl", "VersionedInfo")
 
+visibility("//toolchain/local/triplet/...")
+
 def _header(rctx, path):
     """
     Reads the Linux version header to determine the correct Linux version.

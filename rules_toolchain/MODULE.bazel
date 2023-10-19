@@ -1,12 +1,15 @@
 module(
     name = "rules_toolchain",
+    bazel_compatibility = [
+        ">=6.4.0",
+    ],
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(name = "platforms", version = "0.0.7")
 
-local = use_extension("//toolchain:extensions.bzl", "local")
-local.triplet(
+triplet = use_repo_rule("//toolchain/local/triplet:repository.bzl", "triplet")
+
+triplet(
     name = "local",
 )
-use_repo(local, "local")

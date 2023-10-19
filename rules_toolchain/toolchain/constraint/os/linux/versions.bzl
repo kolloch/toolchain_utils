@@ -1,5 +1,6 @@
 load("@local//:triplet.bzl", "TRIPLET")
-load("@bazel_skylib//lib:sets.bzl", "sets")
+
+visibility("//toolchain/...")
 
 LOCAL = TRIPLET.os.version and TRIPLET.os.version.value
 
@@ -15,14 +16,4 @@ LTS = (
     "5.15.131",
 )
 
-def _versions(value):
-    major, minor, patch = value.split(".")
-    return ["{}.{}.{}".format(major, minor, p) for p in range(int(patch))]
-
-VERSIONS = tuple(sets.to_list(sets.make([
-    v
-    for v in list(LTS) +
-             [x for v in LTS for x in _versions(v)] +
-             [LOCAL]
-    if v != None
-])))
+VERSIONS = LTS + tuple([LOCAL] if LOCAL != None else [])

@@ -1,6 +1,8 @@
 load("@bazel_skylib//lib:types.bzl", "types")
 load(":split.bzl", "split")
 
+visibility("//toolchain/...")
+
 def init(value):
     """
     Initializes a `VersionInfo` provider.

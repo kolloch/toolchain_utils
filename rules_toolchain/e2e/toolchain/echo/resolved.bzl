@@ -1,5 +1,7 @@
 load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
 
+visibility("//toolchain/echo/...")
+
 DOC = _resolved.doc.format(toolchain = "echo")
 
 ATTRS = _resolved.attrs

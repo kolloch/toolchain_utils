@@ -1,5 +1,7 @@
 load(":detect.bzl", "detect")
 
+visibility("//toolchain/...")
+
 DOC = """Detects the host triplet.
 """
 
@@ -23,10 +25,4 @@ triplet = repository_rule(
     implementation = implementation,
     attrs = ATTRS,
     local = True,
-)
-
-export = struct(
-    doc = DOC,
-    attrs = ATTRS,
-    rule = triplet,
 )

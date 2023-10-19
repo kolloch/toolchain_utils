@@ -1,5 +1,7 @@
 load(":TripletInfo.bzl", "TripletInfo")
 
+visibility("//toolchain/...")
+
 ATTRS = {
     "value": attr.string(
         doc = "A triplet value that overrides `name`.",

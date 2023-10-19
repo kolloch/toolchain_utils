@@ -1,3 +1,5 @@
+visibility("//toolchain/...")
+
 ATTRS = {
     "target": attr.label(
         doc = "The binary file to symlink.",
