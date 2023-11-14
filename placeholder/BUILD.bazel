@@ -1,6 +1,0 @@
-load("//placeholder/test:rule.bzl", "placeholder_test")
-
-placeholder_test(
-    name = "placeholder",
-    size = "small",
-)

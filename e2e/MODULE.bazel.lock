@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "0ae7ae7e1528f93aef4bfb44931525ab435a24fd4f480fc0b28f19c1c9a7f66f",
+  "moduleFileHash": "5994db4b0cb0b6d41c15302e14e389188de639595869b573fcd2879139985020",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -13,8 +13,8 @@
     "compatibilityMode": "ERROR"
   },
   "localOverrideHashes": {
-    "bazel_tools": "922ea6752dc9105de5af957f7a99a6933c0a6a712d23df6aad16a9c399f7e787",
-    "rules_placeholder": "bfe34180a91f3ff908710075c27bf5597532ff414e99589309e1cb2b4ab201e7"
+    "rules_toolchain": "00739f08c18e0704210a078643d314b473139c28fd054989fe83997c8453025f",
+    "bazel_tools": "922ea6752dc9105de5af957f7a99a6933c0a6a712d23df6aad16a9c399f7e787"
   },
   "moduleDepGraph": {
     "<root>": {
@@ -26,16 +26,16 @@
       "toolchainsToRegister": [],
       "extensionUsages": [],
       "deps": {
-        "rules_placeholder": "rules_placeholder@_",
+        "rules_toolchain": "rules_toolchain@_",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
       }
     },
-    "rules_placeholder@_": {
-      "name": "rules_placeholder",
+    "rules_toolchain@_": {
+      "name": "rules_toolchain",
       "version": "0.0.0",
-      "key": "rules_placeholder@_",
-      "repoName": "rules_placeholder",
+      "key": "rules_toolchain@_",
+      "repoName": "rules_toolchain",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
       "extensionUsages": [],

@@ -31,11 +31,11 @@ def implementation(ctx):
         runfiles = ctx.runfiles([executable]),
     )
 
-placeholder_test = rule(
+toolchain_test = rule(
     attrs = ATTRS,
     doc = DOC,
     implementation = implementation,
     test = True,
 )
 
-test = placeholder_test
+test = toolchain_test

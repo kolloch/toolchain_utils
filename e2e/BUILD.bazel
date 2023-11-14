@@ -1,6 +1,6 @@
-load("@rules_placeholder//placeholder:defs.bzl", "placeholder_test")
+load("@rules_toolchain//toolchain:defs.bzl", "toolchain_test")
 
-placeholder_test(
+toolchain_test(
     name = "test",
     size = "small",
 )

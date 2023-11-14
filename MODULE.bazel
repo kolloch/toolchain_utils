@@ -1,5 +1,5 @@
 module(
-    name = "rules_placeholder",
+    name = "rules_toolchain",
     version = "0.0.0",
     bazel_compatibility = [
         ">=6.4.0",

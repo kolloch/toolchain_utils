@@ -5,8 +5,8 @@ module(
     ],
 )
 
-bazel_dep(name = "rules_placeholder", version = "0.0.0")
+bazel_dep(name = "rules_toolchain", version = "0.0.0")
 local_path_override(
-    module_name = "rules_placeholder",
+    module_name = "rules_toolchain",
     path = "..",
 )
