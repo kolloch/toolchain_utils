@@ -48,8 +48,8 @@ def implementation(ctx):
         output = executable,
         substitutions = {
             "{{executable}}": str(toolchain.executable.short_path),
-            "{{stdout}}": str(ctx.file.stdout.path),
-            "{{stderr}}": str(ctx.file.stderr.path),
+            "{{stdout}}": str(ctx.file.stdout.short_path),
+            "{{stderr}}": str(ctx.file.stderr.short_path),
         },
         is_executable = True,
     )
