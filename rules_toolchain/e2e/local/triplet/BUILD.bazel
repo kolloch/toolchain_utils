@@ -10,6 +10,7 @@ write_file(
 
 diff_test(
     name = "test",
+    size = "small",
     file1 = ":expected",
     file2 = "@rules_toolchain//toolchain/triplet:local",
 )
