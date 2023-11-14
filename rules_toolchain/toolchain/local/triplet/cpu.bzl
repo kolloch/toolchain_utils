@@ -11,6 +11,8 @@ def cpu(rctx):
       A CPU string.
     """
     return {
+        "x86_64": "amd64",
         "amd64": "amd64",
         "arm64": "arm64",
+        "aarch64": "arm64",
     }[rctx.os.arch]
