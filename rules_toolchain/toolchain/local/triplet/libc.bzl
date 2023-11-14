@@ -9,12 +9,11 @@ def _unquote(value):
     return value
 
 def _release(rctx, path):
-    data = struct(**{
-        k.lower(): _unquote(v)
-        for line in rctx.read(path).splitlines()
-        if "=" in line
-        for k, v in line.split("=", 1)
-    })
+    content = rctx.read(path)
+    lines = content.splitlines()
+    pairs = [line.split("=", 1) for line in lines if "=" in line]
+    processed = {k.lower(): _unquote(v) for k, v in pairs}
+    data = struct(**processed)
 
     if data.id in ("arch", "debian", "fedora"):
         return VersionedInfo("gnu")
