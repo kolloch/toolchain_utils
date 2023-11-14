@@ -1,6 +1,0 @@
-load("@rules_toolchain//toolchain:defs.bzl", "toolchain_test")
-
-toolchain_test(
-    name = "test",
-    size = "small",
-)

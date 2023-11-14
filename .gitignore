@@ -1,6 +1,6 @@
 /.cache
 /bazel-bin
 /bazel-testlogs
-/bazel-rules_placeholder
+/bazel-rules_toolchain
 /bazel-out
 /.bazelrc.user
