@@ -1,0 +1,43 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: bazel/bsp
+Upstream-Contact: Arm Ltd. <developers@arm.com>
+Source: https://gitlab.gpu.arm.com/bazel/bsp
+
+Files:
+  *.bazel
+  *.bzl
+  *.py
+  *.sh
+  *.sh.in
+  *.tmpl.*
+  *.patch
+Copyright: 2023 Arm Ltd.
+License: MIT
+
+Files:
+  */archive.tar.xz
+  ci/docker/*/Dockerfile
+  .bazelrc
+  .editorconfig
+  .eslintrc
+  .flake8
+  .gitignore
+  */.gitignore
+  .gitlab-ci.yml
+  .isort.cfg
+  .mypy.ini
+  .pre-commit-config.yaml
+  .prettierrc
+  .gitignore
+  .bazelrc
+  babel.config.json
+  commitlint.config.js
+  test/py/requirements.in
+  test/py/requirements.txt
+  *.md
+  *.txt
+  *.xml
+  *.tar
+  *.deb
+Copyright: 2023 Arm Ltd.
+License: CC0-1.0
