@@ -74,7 +74,7 @@ def _uname(rctx, path):
     })
 
     if rctx.path("/.dockerenv").exists:
-        print("`uname` release is the host kernel inside a container.")
+        print("`uname` release is the host kernel inside a container. We recommend installing `/usr/include/linux/version.h` into the container.")
 
     return VersionedInfo("linux.{}.{}.{}".format(int(major), int(minor), int(patch)))
 
