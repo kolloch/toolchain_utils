@@ -1,0 +1,14 @@
+# Enable `bzlmod`
+common --enable_bzlmod
+
+# Build cache
+build --experimental_guard_against_concurrent_changes
+
+# Prevent `PATH` and `LD_LIBRARY_PATH` leaking into action enviroment
+build --incompatible_strict_action_env
+
+# Prevent symlink forest under `.runfiles/wsname/external/repo`
+build --nolegacy_external_runfiles
+
+# User-specific .bazelrc
+try-import %workspace%/.bazelrc.user

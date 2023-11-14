@@ -1,0 +1,12 @@
+module(
+    name = "e2e",
+    bazel_compatibility = [
+        ">=6.4.0",
+    ],
+)
+
+bazel_dep(name = "rules_placeholder", version = "0.0.0")
+local_path_override(
+    module_name = "rules_placeholder",
+    path = "..",
+)

@@ -1,0 +1,15 @@
+include:
+  - component: "${CI_SERVER_HOST}/ci/component/bazelisk@v1.0.0-alpha.1"
+
+default:
+  tags:
+    - arm64
+
+test:
+  extends: .bazelisk
+  parallel:
+    matrix:
+      - ROOT:
+          - .
+          - e2e
+

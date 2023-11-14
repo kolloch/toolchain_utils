@@ -1,0 +1,6 @@
+load("@rules_placeholder//placeholder:defs.bzl", "placeholder_test")
+
+placeholder_test(
+    name = "test",
+    size = "small",
+)
