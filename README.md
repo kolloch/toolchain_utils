@@ -117,7 +117,7 @@ resolved = _resolved.rule(
 
 ### Run
 
-The `resolved` target allows toolchain that is compatible with the current machine to be executed:
+The `resolved` target allows the toolchain that is compatible with the current machine to be executed:
 
 ```py
 bazelisk run -- //toolchain/echo:resolved "Hello, world!"
