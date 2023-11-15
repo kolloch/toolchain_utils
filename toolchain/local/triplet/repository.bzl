@@ -17,7 +17,7 @@ def implementation(rctx):
     triplet = detect(rctx)
     rctx.template("triplet.bzl", rctx.attr.template, {
         "{{value}}": triplet.value,
-    })
+    }, executable = False)
     rctx.file("BUILD.bazel", "")
 
 triplet = repository_rule(

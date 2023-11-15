@@ -46,7 +46,7 @@ def implementation(rctx):
         "{{program}}": program,
         "{{path}}": str(path.realpath),
         "{{variable}}": rctx.attr.variable or program.upper(),
-    })
+    }, executable = False)
 
 which = repository_rule(
     doc = DOC,

@@ -18,7 +18,7 @@ def implementation(rctx):
     map = {l: "{}/{}".format(l.package, l.name) for l in rctx.attr.srcs}
 
     for label, path in map.items():
-        rctx.file(path, content = rctx.read(label))
+        rctx.file(path, content = rctx.read(label), executable = False)
 
     rctx.template("BUILD.bazel", rctx.attr.template, {
         "{{srcs}}": repr(map.values()),
