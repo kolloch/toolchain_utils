@@ -13,3 +13,27 @@ test:
           - .
           - e2e
 
+# TODO: switch this out for `rules_semantic_release`
+semantic-release:
+  stage: .post
+  needs:
+    - test
+  image: node:lts
+  cache:
+    key:
+      prefix: "node"
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+      - .cache/npm
+  before_script:
+    - npm config --location project set cache "${CI_PROJECT_DIR}/.cache/npm"
+    - npm ci --prefer-offline
+  script:
+    - !reference [.bazelisk-fragment, rc]
+    - npx semantic-release
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_REF_PROTECTED == "true"

@@ -4,3 +4,4 @@
 /bazel-rules_toolchain
 /bazel-out
 /.bazelrc.user
+/node_modules
