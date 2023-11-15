@@ -27,9 +27,18 @@ ATTRS = {
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
     ),
-    "template": attr.label(
+    "toolchain_type": attr.label(
+        doc = "The toolchain type for the binary.",
+        mandatory = True,
+    ),
+    "resolved": attr.label(
+        doc = "The tepmlate that is expanded into the `resolved.bzl`.",
+        default = "//toolchain/resolved:resolved.tmpl.bzl",
+        allow_single_file = True,
+    ),
+    "build": attr.label(
         doc = "The template that is expanded into the `BUILD.bazel`.",
-        default = Label(":BUILD.tmpl.bazel"),
+        default = ":BUILD.tmpl.bazel",
         allow_single_file = True,
     ),
 }
@@ -41,11 +50,16 @@ def implementation(rctx):
     if not path:
         fail("Cannot find `{}` on `PATH`".format(program))
 
-    rctx.template("BUILD.bazel", rctx.attr.template, {
+    rctx.template("resolved.bzl", rctx.attr.resolved, {
+        "{{toolchain_type}}": str(rctx.attr.toolchain_type),
+    }, executable = False)
+
+    rctx.template("BUILD.bazel", rctx.attr.build, {
         "{{name}}": rctx.attr.target or program,
         "{{program}}": program,
         "{{path}}": str(path.realpath),
         "{{variable}}": rctx.attr.variable or program.upper(),
+        "{{toolchain_type}}": str(rctx.attr.toolchain_type),
     }, executable = False)
 
 which = repository_rule(

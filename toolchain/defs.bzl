@@ -4,6 +4,7 @@ load("//toolchain/symlink/target:rule.bzl", _symlink_target = "target")
 load("//toolchain/test:rule.bzl", _test = "test")
 load("//toolchain/local/which:repository.bzl", _local_which = "which")
 load("//toolchain/local/select:repository.bzl", _local_select = "select")
+load("//toolchain/resolved:repository.bzl", _resolved = "resolved")
 
 visibility("public")
 
@@ -13,3 +14,4 @@ toolchain_symlink_target = _symlink_target
 toolchain_test = _test
 toolchain_local_which = _local_which
 toolchain_local_select = _local_select
+toolchain_resolved = _resolved

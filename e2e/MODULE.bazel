@@ -14,7 +14,17 @@ local_path_override(
 
 which = use_repo_rule("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_which")
 
-which(name = "echo")
+which(
+    name = "echo",
+    toolchain_type = "//toolchain/echo:type",
+)
+
+resolved = use_repo_rule("@rules_toolchain//toolchain:defs.bzl", "toolchain_resolved")
+
+resolved(
+    name = "resolved",
+    toolchain_type = "//toolchain/echo:type",
+)
 
 register_toolchains("//toolchain/echo:all")
 

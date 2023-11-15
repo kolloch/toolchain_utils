@@ -1,13 +1,11 @@
 load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
 
-visibility("//toolchain/echo/...")
-
-DOC = _resolved.doc.format(toolchain = "echo")
+DOC = _resolved.doc
 
 ATTRS = _resolved.attrs
 
 implementation = _resolved.implementation
 
 resolved = _resolved.rule(
-    toolchain_type = Label("//toolchain/echo:type"),
+    toolchain_type = Label("{{toolchain_type}}"),
 )

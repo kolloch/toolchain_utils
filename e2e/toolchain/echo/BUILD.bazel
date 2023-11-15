@@ -1,8 +1,8 @@
-load(":resolved.bzl", "resolved")
 load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_target", "toolchain_test")
 
 toolchain_type(
     name = "type",
+    visibility = ["//visibility:public"],
 )
 
 toolchain_symlink_target(
@@ -21,9 +21,9 @@ alias(
     actual = "hermetic",
 )
 
-resolved(
+alias(
     name = "resolved",
-    toolchain = ":type",
+    actual = "@echo//:resolved",
 )
 
 toolchain_test(
