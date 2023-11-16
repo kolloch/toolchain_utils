@@ -1,3 +1,5 @@
+load("//toolchain:resolved.bzl", _ATTRS = "ATTRS")
+
 visibility("//toolchain/...")
 
 DOC = """Creates a repository that provides a toolchain resolution rule.
@@ -14,11 +16,7 @@ toolchain_resolved(
 [quirk]: https://github.com/bazelbuild/bazel/issues/14009
 """
 
-ATTRS = {
-    "toolchain_type": attr.label(
-        doc = "The toolchain type to resolve.",
-        mandatory = True,
-    ),
+ATTRS = _ATTRS | {
     "resolved": attr.label(
         doc = "The template that is expanded into the `resolved.bzl`.",
         default = Label(":resolved.tmpl.bzl"),
@@ -34,6 +32,7 @@ ATTRS = {
 def implementation(rctx):
     substitutions = {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
+        "{{basename}}": str(rctx.attr.basename),
     }
     rctx.template("resolved.bzl", rctx.attr.resolved, substitutions, executable = False)
     rctx.template("BUILD.bazel", rctx.attr.build, substitutions, executable = False)

@@ -2,6 +2,7 @@ load("//:resolved.bzl", "resolved")
 
 resolved(
     name = "resolved",
-    toolchain = "{{toolchain_type}}",
+    basename = "{{basename}}",
+    toolchain_type = "{{toolchain_type}}",
     visibility = ["//visibility:public"],
 )

@@ -1,3 +1,5 @@
+load("//toolchain:resolved.bzl", _ATTRS = "ATTRS")
+
 visibility("//toolchain/...")
 
 DOC = """Creates a repository that provides a binary target wrapping a local binary found on `PATH`.
@@ -17,7 +19,7 @@ toolchain(
 ```
 """
 
-ATTRS = {
+ATTRS = _ATTRS | {
     "program": attr.string(
         doc = "The name of the binary to find on `PATH`.",
     ),
@@ -26,10 +28,6 @@ ATTRS = {
     ),
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
-    ),
-    "toolchain_type": attr.label(
-        doc = "The toolchain type for the binary.",
-        mandatory = True,
     ),
     "resolved": attr.label(
         doc = "The tepmlate that is expanded into the `resolved.bzl`.",
@@ -52,6 +50,7 @@ def implementation(rctx):
 
     rctx.template("resolved.bzl", rctx.attr.resolved, {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
+        "{{basename}}": str(rctx.attr.basename),
     }, executable = False)
 
     rctx.template("BUILD.bazel", rctx.attr.build, {
