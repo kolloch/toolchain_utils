@@ -15,6 +15,9 @@ Copyright: 2023 Arm Ltd.
 License: MIT
 
 Files:
+  package.json
+  package-lock.json
+  .releaserc.yml
   */archive.tar.xz
   ci/docker/*/Dockerfile
   .bazelrc
