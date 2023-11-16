@@ -12,6 +12,6 @@ toolchain_symlink_path(
 
 resolved(
     name = "resolved",
-    toolchain_type = "{{toolchain_type}}",
     basename = "{{basename}}",
+    toolchain_type = "{{toolchain_type}}",
 )
