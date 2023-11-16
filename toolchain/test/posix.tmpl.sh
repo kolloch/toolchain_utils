@@ -24,7 +24,7 @@ if ! "${EXECUTABLE}" "${@}" >stdout.txt 2>stderr.txt; then
   echo >&2 "stderr:"
   while IFS= read -r LINE; do
     echo >&2 "${LINE}"
-  done <stdout.txt
+  done <stderr.txt
   exit 2
 fi
 
