@@ -29,6 +29,10 @@ ATTRS = _ATTRS | {
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
     ),
+    "mandatory": attr.bool(
+        doc = "Determines if the tool must exist locally",
+        default = False,
+    ),
     "resolved": attr.label(
         doc = "The tepmlate that is expanded into the `resolved.bzl`.",
         default = "//toolchain/resolved:resolved.tmpl.bzl",
@@ -39,6 +43,13 @@ ATTRS = _ATTRS | {
         default = ":BUILD.tmpl.bazel",
         allow_single_file = True,
     ),
+    "stub": attr.label(
+        doc = "An executable to use when the local binary is not found on `PATH`.",
+        default = ":stub.sh",
+        allow_single_file = True,
+        executable = True,
+        cfg = "exec",
+    ),
 }
 
 def implementation(rctx):
@@ -46,7 +57,9 @@ def implementation(rctx):
 
     path = rctx.which(program)
     if not path:
-        fail("Cannot find `{}` on `PATH`".format(program))
+        if rctx.attr.mandatory:
+            fail("Cannot find `{}` on `PATH`".format(program))
+        path = rctx.path(rctx.attr.stub)
 
     rctx.template("resolved.bzl", rctx.attr.resolved, {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
