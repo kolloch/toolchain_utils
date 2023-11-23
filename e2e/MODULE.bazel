@@ -52,3 +52,10 @@ select(
         "arm-linux-musl": "@fixture-arm-linux-musl",
     },
 )
+
+export = use_extension("@rules_toolchain//toolchain/export:defs.bzl", "export")
+export.symlink(
+    name = "export",
+    target = "@fixture",
+)
+use_repo(export, "export")
