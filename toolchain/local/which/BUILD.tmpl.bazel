@@ -3,6 +3,8 @@ load("//:resolved.bzl", "resolved")
 
 package(default_visibility = ["//visibility:public"])
 
+exports_files(["entrypoint"])
+
 toolchain_symlink_path(
     name = "{{name}}",
     path = "{{path}}",

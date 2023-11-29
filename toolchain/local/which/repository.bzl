@@ -50,6 +50,13 @@ ATTRS = _ATTRS | {
         executable = True,
         cfg = "exec",
     ),
+    "entrypoint": attr.label(
+        doc = "An executable entrypoint template for hermetic rulesets.",
+        default = ":entrypoint.tmpl.sh",
+        allow_single_file = True,
+        executable = True,
+        cfg = "exec",
+    ),
 }
 
 def implementation(rctx):
@@ -65,6 +72,10 @@ def implementation(rctx):
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
         "{{basename}}": str(rctx.attr.basename),
     }, executable = False)
+
+    rctx.template("entrypoint", rctx.attr.entrypoint, {
+        "{{path}}": str(path.realpath),
+    }, executable = True)
 
     rctx.template("BUILD.bazel", rctx.attr.build, {
         "{{name}}": rctx.attr.target or program,
