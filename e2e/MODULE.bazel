@@ -53,7 +53,7 @@ select(
     },
 )
 
-export = use_extension("@rules_toolchain//toolchain/export:defs.bzl", "export")
+export = use_extension("@rules_toolchain//toolchain/export:defs.bzl", "toolchain_export")
 export.symlink(
     name = "export",
     target = "@fixture",

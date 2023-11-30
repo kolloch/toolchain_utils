@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "a4f83750c39dd1dd3c7f4cb6e91173765b61fec4346ea33df2f4a7cb7e60c729",
+  "moduleFileHash": "7c7e76923d2e2442dc1fbaa7b1e37fda17ab54a2eefba7b32eab54747d049bc9",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -123,6 +123,37 @@
                 "file": "@@//:MODULE.bazel",
                 "line": 47,
                 "column": 7
+              }
+            }
+          ],
+          "hasDevUseExtension": false,
+          "hasNonDevUseExtension": true
+        },
+        {
+          "extensionBzlFile": "@rules_toolchain//toolchain/export:defs.bzl",
+          "extensionName": "toolchain_export",
+          "usingModule": "<root>",
+          "location": {
+            "file": "@@//:MODULE.bazel",
+            "line": 56,
+            "column": 23
+          },
+          "imports": {
+            "export": "export"
+          },
+          "devImports": [],
+          "tags": [
+            {
+              "tagName": "symlink",
+              "attributeValues": {
+                "name": "export",
+                "target": "@fixture"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 57,
+                "column": 15
               }
             }
           ],
@@ -777,7 +808,7 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "/xroDvlQ7p867k7lShdRN/8y8PAICvIR2NWA0F7JzLg=",
+        "bzlTransitiveDigest": "/R69egUTLvkHkALvRLGxIJMgJWsQ0N6s2oGkMp4YL30=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
@@ -833,7 +864,7 @@
         }
       }
     },
-    "@apple_support~1.5.0//crosstool:setup.bzl%apple_cc_configure_extension": {
+    "@@apple_support~1.5.0//crosstool:setup.bzl%apple_cc_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "pMLFCYaRPkgXPQ8vtuNkMfiHfPmRBy6QJfnid4sWfv0=",
         "accumulatedFileDigests": {},
@@ -856,7 +887,7 @@
         }
       }
     },
-    "@bazel_tools//tools/cpp:cc_configure.bzl%cc_configure_extension": {
+    "@@bazel_tools//tools/cpp:cc_configure.bzl%cc_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "O9sf6ilKWU9Veed02jG9o2HM/xgV/UAyciuFBuxrFRY=",
         "accumulatedFileDigests": {},
@@ -879,7 +910,7 @@
         }
       }
     },
-    "@bazel_tools//tools/sh:sh_configure.bzl%sh_configure_extension": {
+    "@@bazel_tools//tools/sh:sh_configure.bzl%sh_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "hp4NgmNjEg5+xgvzfh6L83bt9/aiiWETuNpwNuF1MSU=",
         "accumulatedFileDigests": {},
@@ -895,9 +926,9 @@
         }
       }
     },
-    "@rules_java~7.1.0//java:extensions.bzl%toolchains": {
+    "@@rules_java~7.1.0//java:extensions.bzl%toolchains": {
       "general": {
-        "bzlTransitiveDigest": "EXsxSX2vQjCcI8jYez/O+Yb9H5reAMhLL3WXGPD6Scw=",
+        "bzlTransitiveDigest": "iUIRqCK7tkhvcDJCAfPPqSd06IHG0a8HQD0xeQyVAqw=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
@@ -1435,7 +1466,7 @@
         }
       }
     },
-    "@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
+    "@@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
       "general": {
         "bzlTransitiveDigest": "VGGV2/aS8KP0wlEaxXfdomUzHtZ4Ry+aV/L2Ktp3UCo=",
         "accumulatedFileDigests": {},
@@ -1446,6 +1477,23 @@
             "ruleClassName": "triplet",
             "attributes": {
               "name": "rules_toolchain~override~_repo_rules~local"
+            }
+          }
+        }
+      }
+    },
+    "@@rules_toolchain~override//toolchain/export:defs.bzl%toolchain_export": {
+      "general": {
+        "bzlTransitiveDigest": "GaX6IuOvOKsD8efBm9Fy5gFKF6piHEW7gvUENxCsD9M=",
+        "accumulatedFileDigests": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "export": {
+            "bzlFile": "@@rules_toolchain~override//toolchain/export/symlink:repository.bzl",
+            "ruleClassName": "symlink",
+            "attributes": {
+              "name": "rules_toolchain~override~toolchain_export~export",
+              "target": "@@_main~_repo_rules~fixture//:fixture"
             }
           }
         }
