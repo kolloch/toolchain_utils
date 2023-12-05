@@ -6,20 +6,21 @@ toolchain_type(
     visibility = ["//visibility:public"],
 )
 
-toolchain_symlink_target(
-    name = "hermetic",
-    target = ":echo.sh",
-)
-
 toolchain(
     name = "local",
     toolchain = "@echo//:echo",
     toolchain_type = ":type",
 )
 
-alias(
-    name = "echo",
-    actual = "hermetic",
+toolchain_symlink_target(
+    name = "script",
+    target = ":echo.sh",
+)
+
+toolchain(
+    name = "hermetic",
+    toolchain = ":script",
+    toolchain_type = ":type",
 )
 
 alias(
