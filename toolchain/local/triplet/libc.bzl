@@ -49,6 +49,23 @@ def _ldd(rctx, path):
 
     fail("Failed to detect `{}` version:\n{}".format(path, result.stdout))
 
+def _powershell(rctx, path):
+    result = rctx.execute([path, "-Command", "Get-Package -Name 'Universal CRT Redistributable'| Format-Wide -Property Version"])
+    if result.return_code != 0:
+        fail("Failed to retrieve `Get-Package` version output:\n{}".format(result.stderr))
+
+    version = result.stdout.strip()
+
+    major, minor, build, patch = split(version, ".", {
+        3: lambda w, x, y, z: (w, x, y, None),
+        4: lambda w, x, y, z: (w, x, y, z),
+    })
+
+    if patch:
+        return VersionedInfo("ucrt.{}.{}.{}+{}".format(int(major), int(minor), int(build), int(patch)))
+
+    return VersionedInfo("ucrt.{}.{}.{}".format(int(major), int(minor), int(build)))
+
 def libc(rctx):
     """
     Detects the host C library.
@@ -66,5 +83,9 @@ def libc(rctx):
     path = rctx.path("/etc/os-release")
     if path.exists:
         return _release(rctx, path)
+
+    path = rctx.which("powershell.exe")
+    if path:
+        return _powershell(rctx, path)
 
     fail("Failed to detect host C library")
