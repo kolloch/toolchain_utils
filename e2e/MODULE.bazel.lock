@@ -808,7 +808,7 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "/R69egUTLvkHkALvRLGxIJMgJWsQ0N6s2oGkMp4YL30=",
+        "bzlTransitiveDigest": "L6CiLxS6v0YN9d8yxQi+1oUtoYFLVWWho6J7A4BgHB8=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
@@ -1468,7 +1468,7 @@
     },
     "@@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "VGGV2/aS8KP0wlEaxXfdomUzHtZ4Ry+aV/L2Ktp3UCo=",
+        "bzlTransitiveDigest": "4dF26p1sSSHcbwj60ndza5fdK5QeD94q2c21V9FovL0=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
