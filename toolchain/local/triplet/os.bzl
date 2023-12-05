@@ -68,8 +68,6 @@ def _uname(rctx, path):
     version, _ = result.stdout.split("-", 1)
 
     major, minor, patch = split(version, ".", {
-        1: lambda x: (x, None, None),
-        2: lambda x, y: (x, y, None),
         3: lambda x, y, z: (x, y, z),
     })
 
