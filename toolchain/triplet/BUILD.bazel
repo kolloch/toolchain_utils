@@ -2,6 +2,11 @@ load(":triplets.bzl", "TRIPLETS")
 load(":rule.bzl", "triplet")
 load(":test.bzl", "test")
 
+exports_files([
+    "nt.tmpl.bat",
+    "posix.tmpl.sh",
+])
+
 [
     triplet(
         name = t.value,
@@ -20,4 +25,13 @@ test(
     name = "test",
     size = "small",
     target_under_test = ":amd64-linux-gnu",
+)
+
+alias(
+    name = "template",
+    actual = select({
+        "//toolchain/constraint/os:windows": ":nt.tmpl.bat",
+        "//conditions:default": ":posix.tmpl.sh",
+    }),
+    visibility = ["//toolchain:__subpackages__"],
 )

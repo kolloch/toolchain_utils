@@ -6,6 +6,13 @@ ATTRS = {
     "value": attr.string(
         doc = "A triplet value that overrides `name`.",
     ),
+    "template": attr.label(
+        doc = "The executable script template.",
+        default = ":template",
+        allow_single_file = True,
+        executable = False,
+        cfg = "exec",
+    ),
 }
 
 def implementation(ctx):
@@ -18,10 +25,14 @@ def implementation(ctx):
         content = value,
     )
 
-    executable = ctx.actions.declare_file("{}.sh".format(value))
-    ctx.actions.write(
+    substitutions = ctx.actions.template_dict()
+    substitutions.add("{{triplet}}", value)
+
+    executable = ctx.actions.declare_file("{}.{}".format(value, ctx.file.template.extension))
+    ctx.actions.expand_template(
         output = executable,
-        content = "#!/bin/sh\nprintf '%s\n' {}".format(value),
+        template = ctx.file.template,
+        computed_substitutions = substitutions,
         is_executable = True,
     )
 
