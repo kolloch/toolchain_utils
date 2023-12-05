@@ -91,7 +91,7 @@ def os(rctx):
         return _header(rctx, path)
 
     path = rctx.which("uname")
-    if path.exists:
+    if path:
         return _uname(rctx, path)
 
     return VersionedInfo({
