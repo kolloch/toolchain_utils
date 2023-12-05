@@ -76,6 +76,35 @@ def _uname(rctx, path):
 
     return VersionedInfo("linux.{}.{}.{}".format(int(major), int(minor), int(patch)))
 
+def _cmd(rctx, path):
+    """
+    Determines the operating system version from `ver`, a `cmd` built-in.
+
+    Args:
+      rctx: The repository context that can execute commands on the host machine.
+      path: the path to the `cmd` executable.
+
+    Returns:
+      The `VersionedInfo` provider
+    """
+    result = rctx.execute((path, "/C", "ver"))
+    if result.return_code != 0:
+        fail("Failed to get `ver` release: {}".format(result.stderr))
+
+    version = result.stdout.strip()
+    sku, version = version.split(" [Version ")
+    version = version.removesuffix("]")
+
+    major, minor, build, patch = split(version, ".", {
+        4: lambda w, x, y, z: (w, x, y, z),
+    })
+
+    variant = {
+        "Microsoft Windows": "windows",
+    }[sku]
+
+    return VersionedInfo("{}.{}.{}.{}+{}".format(variant, int(major), int(minor), int(build), int(patch)))
+
 def os(rctx):
     """
     Detects the host operating system.
@@ -93,6 +122,10 @@ def os(rctx):
     path = rctx.which("uname")
     if path:
         return _uname(rctx, path)
+
+    path = rctx.which("cmd.exe")
+    if path:
+        return _cmd(rctx, path)
 
     return VersionedInfo({
         "linux": "linux",
