@@ -6,3 +6,8 @@ constraint_value(
     name = "gnu",
     constraint_setting = ":libc",
 )
+
+constraint_value(
+    name = "ucrt",
+    constraint_setting = ":libc",
+)
