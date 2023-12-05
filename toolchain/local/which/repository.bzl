@@ -61,6 +61,7 @@ ATTRS = _ATTRS | {
 
 def implementation(rctx):
     program = rctx.attr.program or rctx.attr.name.rsplit("~", 1)[1]
+    basename = rctx.attr.basename or program
 
     path = rctx.which(program)
     if not path:
@@ -70,7 +71,7 @@ def implementation(rctx):
 
     rctx.template("resolved.bzl", rctx.attr.resolved, {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
-        "{{basename}}": str(rctx.attr.basename),
+        "{{basename}}": basename,
     }, executable = False)
 
     rctx.template("entrypoint", rctx.attr.entrypoint, {
@@ -80,6 +81,7 @@ def implementation(rctx):
     rctx.template("BUILD.bazel", rctx.attr.build, {
         "{{name}}": rctx.attr.target or program,
         "{{program}}": program,
+        "{{basename}}": basename,
         "{{path}}": str(path.realpath),
         "{{variable}}": rctx.attr.variable or program.upper(),
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
