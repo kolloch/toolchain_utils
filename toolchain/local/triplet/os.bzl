@@ -96,4 +96,5 @@ def os(rctx):
 
     return VersionedInfo({
         "linux": "linux",
+        "windows 10": "windows.10",
     }[rctx.os.name])
