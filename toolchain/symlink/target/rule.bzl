@@ -1,5 +1,41 @@
 visibility("//toolchain/...")
 
+DOC = """Creates a executable symlink to a binary target file.
+
+This rule can be used to symlink a executable target and export the necessary toolchain providers.
+
+Often used with downloaded binary targets:
+
+```py
+load("@rules_toolchain//toolchain:defs.bzl", "ToolchainTripletInfo")
+
+toolchain_type(
+    name = "type",
+)
+
+# Setup a toolchain for each downloaded binary
+[
+    (
+        toolchain_symlink_target(
+            name = "something-{}".format(triplet.value),
+            target = "@downloaded-{}//:something".format(triplet),
+        ),
+        toolchain(
+            name = triplet.value,
+            toolchain = ":something-{}".format(triplet.value),
+            exec_compatible_with = triplet.constraints,
+        )
+    )
+    for triplet in (
+        ToolchainTripletInfo("arm64-linux-gnu"),
+        ToolchainTripletInfo("arm64-linux-musl"),
+    )
+]
+```
+
+`rules_download` has a `download.archive` and `download.file` extension that can help with retrieving remote binaries.
+"""
+
 ATTRS = {
     "target": attr.label(
         doc = "The binary file to symlink.",
@@ -50,41 +86,7 @@ def implementation(ctx):
     return [variables, toolchain, default]
 
 target = rule(
-    doc = """Creates a executable symlink to a binary target file.
-
-This rule can be used to symlink a executable target and export the necessary toolchain providers.
-
-Often used with downloaded binary targets:
-
-```py
-load("@rules_toolchain//toolchain:defs.bzl", "ToolchainTripletInfo")
-
-toolchain_type(
-    name = "type",
-)
-
-# Setup a toolchain for each downloaded binary
-[
-    (
-        toolchain_symlink_target(
-            name = "something-{}".format(triplet.value),
-            target = "@downloaded-{}//:something".format(triplet),
-        ),
-        toolchain(
-            name = triplet.value,
-            toolchain = ":something-{}".format(triplet.value),
-            exec_compatible_with = triplet.constraints,
-        )
-    )
-    for triplet in (
-        ToolchainTripletInfo("arm64-linux-gnu"),
-        ToolchainTripletInfo("arm64-linux-musl"),
-    )
-]
-```
-
-`rules_download` has a `download.archive` and `download.file` extension that can help with retrieving remote binaries.
-""",
+    doc = DOC,
     attrs = ATTRS,
     implementation = implementation,
     provides = [
