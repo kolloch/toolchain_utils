@@ -15,6 +15,7 @@ Copyright: 2023 Arm Ltd.
 License: MIT
 
 Files:
+  .npmrc
   icon.svg
   package.json
   package-lock.json
