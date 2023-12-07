@@ -835,7 +835,7 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "9JxXrmfNb78Xi25kLIofG+wYfaaT/4WtRWFscwj7N9s=",
+        "bzlTransitiveDigest": "D+LVccvjhC6Fe6jgT0CX0WPaNhyl1RcBJygqKAExA8o=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {

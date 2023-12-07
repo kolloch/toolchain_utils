@@ -32,7 +32,7 @@ Can be overridden to a custom script that receives the following replacements:
 - `{{stdout}}`: the expected standard output
 - `{{stderr}}`: the expected standard error
 """,
-        default = ":posix.tmpl.sh",
+        default = ":template",
         allow_single_file = True,
     ),
 }
@@ -42,15 +42,17 @@ def implementation(ctx):
         fail("Only one toolchain can be provided")
     toolchain = ctx.attr.toolchains[0][platform_common.ToolchainInfo]
 
-    executable = ctx.actions.declare_file("{}.executable".format(ctx.label.name))
+    executable = ctx.actions.declare_file("{}.{}".format(ctx.label.name, ctx.file.template.extension))
+
+    substitutions = ctx.actions.template_dict()
+    substitutions.add("{{executable}}", str(toolchain.executable.short_path))
+    substitutions.add("{{stdout}}", str(ctx.file.stdout.short_path))
+    substitutions.add("{{stderr}}", str(ctx.file.stderr.short_path))
+
     ctx.actions.expand_template(
         template = ctx.file.template,
         output = executable,
-        substitutions = {
-            "{{executable}}": str(toolchain.executable.short_path),
-            "{{stdout}}": str(ctx.file.stdout.short_path),
-            "{{stderr}}": str(ctx.file.stderr.short_path),
-        },
+        computed_substitutions = substitutions,
         is_executable = True,
     )
 
