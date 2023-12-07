@@ -60,10 +60,15 @@ def implementation(ctx):
     basename = ctx.attr.basename or ctx.label.name
     variable = ctx.attr.variable or basename.upper()
 
+    target = ctx.files.target[0]
+    extension = target.extension
+    if extension in ("bat", "com"):
+        basename = "{}.{}".format(basename, extension)
+
     executable = ctx.actions.declare_file(basename)
     ctx.actions.symlink(
         output = executable,
-        target_file = ctx.files.target[0],
+        target_file = target,
         is_executable = True,
     )
 
