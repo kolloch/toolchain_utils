@@ -27,10 +27,15 @@ def implementation(ctx):
     basename = ctx.attr.basename or ctx.label.name
     toolchain = ctx.toolchains[ctx.attr.toolchain_type.label]
 
+    target = toolchain.executable
+    extension = target.extension
+    if extension in ("bat", "com"):
+        basename = "{}.{}".format(basename, extension)
+
     executable = ctx.actions.declare_file(basename)
     ctx.actions.symlink(
         output = executable,
-        target_file = toolchain.executable,
+        target_file = target,
         is_executable = True,
     )
 
