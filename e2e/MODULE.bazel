@@ -42,6 +42,14 @@ fixture(
     name = "fixture-arm-linux-musl",
 )
 
+fixture(
+    name = "fixture-windows-ucrt",
+)
+
+fixture(
+    name = "fixture-arm64-windows-ucrt",
+)
+
 select = use_repo_rule("@rules_toolchain//toolchain:defs.bzl", "toolchain_local_select")
 
 select(
@@ -50,6 +58,7 @@ select(
         "amd64-linux-gnu": "@fixture-amd64-linux-gnu",
         "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
         "arm-linux-musl": "@fixture-arm-linux-musl",
+        "windows-ucrt": "@fixture-windows-ucrt",
     },
 )
 
