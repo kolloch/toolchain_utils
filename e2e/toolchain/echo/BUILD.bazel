@@ -14,7 +14,10 @@ toolchain(
 
 toolchain_symlink_target(
     name = "script",
-    target = ":echo.sh",
+    target = select({
+        "@rules_toolchain//toolchain/constraint/os:windows": ":echo.bat",
+        "//conditions:default": ":echo.sh",
+    }),
 )
 
 toolchain(
