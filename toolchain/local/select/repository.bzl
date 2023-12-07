@@ -43,10 +43,22 @@ def implementation(rctx):
 
     selects = (
         "{}-{}-{}".format(t.cpu, t.os.value, t.libc.value),
+        "{}-{}-{}".format(t.cpu, t.os.value, t.libc.kind),
+        "{}-{}-{}".format(t.cpu, t.os.kind, t.libc.value),
         "{}-{}-{}".format(t.cpu, t.os.kind, t.libc.kind),
         "{}-{}".format(t.cpu, t.os.value),
         "{}-{}".format(t.cpu, t.os.kind),
+        "{}-{}".format(t.os.value, t.libc.value),
+        "{}-{}".format(t.os.value, t.libc.kind),
+        "{}-{}".format(t.os.kind, t.libc.value),
+        "{}-{}".format(t.os.kind, t.libc.kind),
+        "{}-{}".format(t.cpu, t.libc.value),
+        "{}-{}".format(t.cpu, t.libc.kind),
         "{}".format(t.cpu),
+        "{}".format(t.os.value),
+        "{}".format(t.os.kind),
+        "{}".format(t.libc.value),
+        "{}".format(t.libc.kind),
         "//conditions:default",
     )
 
