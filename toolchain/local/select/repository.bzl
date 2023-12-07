@@ -28,7 +28,7 @@ toolchian_local_select(
         doc = """Error message to raise when no match is found in map.
 
     Can use the `{triplet}` replacement to show the resolved local triplet.""",
-        default = "No repository match found for `{triplet}`",
+        default = "No repository match found for `{triplet}`: {map}",
     ),
 }
 
@@ -64,7 +64,7 @@ def implementation(rctx):
             rctx.symlink(path.dirname, ".")
             return
 
-    fail(rctx.attr.no_match_error.format(triplet = t.value))
+    fail(rctx.attr.no_match_error.format(triplet = t.value, map = rctx.attr.map))
 
 select = repository_rule(
     doc = DOC,
