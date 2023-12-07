@@ -62,7 +62,7 @@ def implementation(ctx):
 
     target = ctx.files.target[0]
     extension = target.extension
-    if extension in ("bat", "com"):
+    if extension in ("bat", "cmd"):
         basename = "{}.{}".format(basename, extension)
 
     executable = ctx.actions.declare_file(basename)

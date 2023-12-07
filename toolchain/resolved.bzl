@@ -29,7 +29,7 @@ def implementation(ctx):
 
     target = toolchain.executable
     extension = target.extension
-    if extension in ("bat", "com"):
+    if extension in ("bat", "cmd"):
         basename = "{}.{}".format(basename, extension)
 
     executable = ctx.actions.declare_file(basename)
