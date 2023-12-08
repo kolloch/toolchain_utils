@@ -87,4 +87,33 @@ toolchain(
 )
 ```
 
+## Usage
+
+### Toolchain
+
+Declare the usage of the toolchain in a rule definition:
+
+```py
+def implementation(ctx):
+    toolchain = ctx.toolchains["//toolchain/echo:type"]
+    print(toolchain.executable)
+    print(toolchain.default.files)
+    print(toolchain.default.runfiles)
+
+example = rule(
+    implementation = implementation,
+    toolchains = ["//toolchain/echo:type"],
+)
+```
+
+### Variable
+
+Pass the resolved toolchain to a rule that supports variables:
+
+```py
+genrule(
+    toolchains = ["//toolchain/echo:resolved"]
+)
+```
+
 [resolved]: https://github.com/bazelbuild/bazel/issues/14009
