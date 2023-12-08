@@ -1,5 +1,4 @@
-load("//toolchain/local/triplet:detect.bzl", "detect")
-load("//toolchain/triplet:TripletInfo.bzl", "TripletInfo")
+load(":resolve.bzl", resolve = "key")
 
 visibility("//toolchain/...")
 
@@ -39,44 +38,16 @@ def canonical(rctx, label):
     return "@@{}~{}".format(prefix, label.removeprefix("@"))
 
 def implementation(rctx):
-    t = TripletInfo(rctx.attr.triplet or detect(rctx).value)
+    label = resolve(rctx.attr.map, no_match_error = rctx.attr.no_match_error)
+    canon = canonical(rctx, label)
+    workspace = Label("{}//:WORKSPACE".format(canon))
+    path = rctx.path(workspace)
 
-    selects = (
-        "{}-{}-{}".format(t.cpu, t.os.value, t.libc.value),
-        "{}-{}-{}".format(t.cpu, t.os.value, t.libc.kind),
-        "{}-{}-{}".format(t.cpu, t.os.kind, t.libc.value),
-        "{}-{}-{}".format(t.cpu, t.os.kind, t.libc.kind),
-        "{}-{}".format(t.cpu, t.os.value),
-        "{}-{}".format(t.cpu, t.os.kind),
-        "{}-{}".format(t.os.value, t.libc.value),
-        "{}-{}".format(t.os.value, t.libc.kind),
-        "{}-{}".format(t.os.kind, t.libc.value),
-        "{}-{}".format(t.os.kind, t.libc.kind),
-        "{}-{}".format(t.cpu, t.libc.value),
-        "{}-{}".format(t.cpu, t.libc.kind),
-        "{}".format(t.cpu),
-        "{}".format(t.os.value),
-        "{}".format(t.os.kind),
-        "{}".format(t.libc.value),
-        "{}".format(t.libc.kind),
-        "//conditions:default",
-    )
+    if not path.exists:
+        fail("Missing `{}` for `{}`: {}".format(label, select, path))
 
-    for select in selects:
-        if select in rctx.attr.map:
-            label = rctx.attr.map[select]
-            canon = canonical(rctx, label)
-            workspace = Label("{}//:WORKSPACE".format(canon))
-            path = rctx.path(workspace)
-
-            if not path.exists:
-                fail("Missing `{}` for `{}`: {}".format(label, select, path))
-
-            rctx.delete(".")
-            rctx.symlink(path.dirname, ".")
-            return
-
-    fail(rctx.attr.no_match_error.format(triplet = t.value, map = rctx.attr.map))
+    rctx.delete(".")
+    rctx.symlink(path.dirname, ".")
 
 select = repository_rule(
     doc = DOC,
