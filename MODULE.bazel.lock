@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "7f9b37f78b8efa56f637a36bf82821b279e85712874fd6ee4041b71ce1e925a0",
+  "moduleFileHash": "55a8f1e3f74b9d8c0339def09fee2ef9e3ba7d6867977992475a8ff11094305f",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -34,7 +34,8 @@
             "column": 0
           },
           "imports": {
-            "local": "local"
+            "local": "local",
+            "launcher": "launcher"
           },
           "devImports": [],
           "tags": [
@@ -48,6 +49,18 @@
                 "file": "@@//:MODULE.bazel",
                 "line": 14,
                 "column": 8
+              }
+            },
+            {
+              "tagName": "//toolchain/launcher:repository.bzl%launcher",
+              "attributeValues": {
+                "name": "launcher"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 20,
+                "column": 9
               }
             }
           ],
@@ -656,7 +669,7 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "tQgZG2u3/r0przCc+q2TDxA2zcb6gO7ViJqNV33ak4s=",
+        "bzlTransitiveDigest": "CSJxsw5u8tv972NPHJazAfB/a3Rb8wU8pXWhqZJv+Wk=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
@@ -665,6 +678,13 @@
             "ruleClassName": "triplet",
             "attributes": {
               "name": "_main~_repo_rules~local"
+            }
+          },
+          "launcher": {
+            "bzlFile": "@@//toolchain/launcher:repository.bzl",
+            "ruleClassName": "launcher",
+            "attributes": {
+              "name": "_main~_repo_rules~launcher"
             }
           }
         }

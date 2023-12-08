@@ -13,7 +13,7 @@
     "compatibilityMode": "ERROR"
   },
   "localOverrideHashes": {
-    "rules_toolchain": "7f9b37f78b8efa56f637a36bf82821b279e85712874fd6ee4041b71ce1e925a0",
+    "rules_toolchain": "55a8f1e3f74b9d8c0339def09fee2ef9e3ba7d6867977992475a8ff11094305f",
     "bazel_tools": "922ea6752dc9105de5af957f7a99a6933c0a6a712d23df6aad16a9c399f7e787"
   },
   "moduleDepGraph": {
@@ -244,7 +244,8 @@
             "column": 0
           },
           "imports": {
-            "local": "local"
+            "local": "local",
+            "launcher": "launcher"
           },
           "devImports": [],
           "tags": [
@@ -258,6 +259,18 @@
                 "file": "@@rules_toolchain~override//:MODULE.bazel",
                 "line": 14,
                 "column": 8
+              }
+            },
+            {
+              "tagName": "//toolchain/launcher:repository.bzl%launcher",
+              "attributeValues": {
+                "name": "launcher"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@rules_toolchain~override//:MODULE.bazel",
+                "line": 20,
+                "column": 9
               }
             }
           ],
@@ -1510,7 +1523,7 @@
     },
     "@@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "tQgZG2u3/r0przCc+q2TDxA2zcb6gO7ViJqNV33ak4s=",
+        "bzlTransitiveDigest": "CSJxsw5u8tv972NPHJazAfB/a3Rb8wU8pXWhqZJv+Wk=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
@@ -1519,6 +1532,13 @@
             "ruleClassName": "triplet",
             "attributes": {
               "name": "rules_toolchain~override~_repo_rules~local"
+            }
+          },
+          "launcher": {
+            "bzlFile": "@@rules_toolchain~override//toolchain/launcher:repository.bzl",
+            "ruleClassName": "launcher",
+            "attributes": {
+              "name": "rules_toolchain~override~_repo_rules~launcher"
             }
           }
         }

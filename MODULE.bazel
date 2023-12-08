@@ -14,3 +14,9 @@ triplet = use_repo_rule("//toolchain/local/triplet:defs.bzl", "toolchain_local_t
 triplet(
     name = "local",
 )
+
+launcher = use_repo_rule("//toolchain/launcher:repository.bzl", "launcher")
+
+launcher(
+    name = "launcher",
+)
