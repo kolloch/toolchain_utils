@@ -835,7 +835,7 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "D+LVccvjhC6Fe6jgT0CX0WPaNhyl1RcBJygqKAExA8o=",
+        "bzlTransitiveDigest": "IjRvx4NijTxX2ZHy9NZgssmP1k+HVQl/yCEWD/UUfnE=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
@@ -1503,6 +1503,39 @@
             "attributes": {
               "name": "rules_java~7.1.0~toolchains~remotejdk21_win_toolchain_config_repo",
               "build_file": "\nconfig_setting(\n    name = \"prefix_version_setting\",\n    values = {\"java_runtime_version\": \"remotejdk_21\"},\n    visibility = [\"//visibility:private\"],\n)\nconfig_setting(\n    name = \"version_setting\",\n    values = {\"java_runtime_version\": \"21\"},\n    visibility = [\"//visibility:private\"],\n)\nalias(\n    name = \"version_or_prefix_version_setting\",\n    actual = select({\n        \":version_setting\": \":version_setting\",\n        \"//conditions:default\": \":prefix_version_setting\",\n    }),\n    visibility = [\"//visibility:private\"],\n)\ntoolchain(\n    name = \"toolchain\",\n    target_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:runtime_toolchain_type\",\n    toolchain = \"@remotejdk21_win//:jdk\",\n)\ntoolchain(\n    name = \"bootstrap_runtime_toolchain\",\n    # These constraints are not required for correctness, but prevent fetches of remote JDK for\n    # different architectures. As every Java compilation toolchain depends on a bootstrap runtime in\n    # the same configuration, this constraint will not result in toolchain resolution failures.\n    exec_compatible_with = [\"@platforms//os:windows\", \"@platforms//cpu:x86_64\"],\n    target_settings = [\":version_or_prefix_version_setting\"],\n    toolchain_type = \"@bazel_tools//tools/jdk:bootstrap_runtime_toolchain_type\",\n    toolchain = \"@remotejdk21_win//:jdk\",\n)\n"
+            }
+          }
+        }
+      }
+    },
+    "@@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
+      "general": {
+        "bzlTransitiveDigest": "PJKVbnIM2BxQsHVWPmARcrJlp1YvK08xom24WYisdnQ=",
+        "accumulatedFileDigests": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "local": {
+            "bzlFile": "@@rules_toolchain~override//toolchain/local/triplet:repository.bzl",
+            "ruleClassName": "triplet",
+            "attributes": {
+              "name": "rules_toolchain~override~_repo_rules~local"
+            }
+          }
+        }
+      }
+    },
+    "@@rules_toolchain~override//toolchain/export:defs.bzl%toolchain_export": {
+      "general": {
+        "bzlTransitiveDigest": "GaX6IuOvOKsD8efBm9Fy5gFKF6piHEW7gvUENxCsD9M=",
+        "accumulatedFileDigests": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "export": {
+            "bzlFile": "@@rules_toolchain~override//toolchain/export/symlink:repository.bzl",
+            "ruleClassName": "symlink",
+            "attributes": {
+              "name": "rules_toolchain~override~toolchain_export~export",
+              "target": "@@_main~_repo_rules~fixture//:fixture"
             }
           }
         }
