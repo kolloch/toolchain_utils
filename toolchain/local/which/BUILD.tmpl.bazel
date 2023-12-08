@@ -1,4 +1,4 @@
-load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_path")
+load("@rules_toolchain//toolchain/symlink/path:defs.bzl", "toolchain_symlink_path")
 load("//:resolved.bzl", "resolved")
 
 package(default_visibility = ["//visibility:public"])

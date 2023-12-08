@@ -1,4 +1,4 @@
-load("@rules_toolchain//toolchain:defs.bzl", "ToolchainTripletInfo")
+load("@rules_toolchain//toolchain/triplet:defs.bzl", "ToolchainTripletInfo")
 
 visibility("public")
 

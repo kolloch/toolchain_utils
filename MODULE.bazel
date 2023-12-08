@@ -9,7 +9,7 @@ module(
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(name = "platforms", version = "0.0.7")
 
-triplet = use_repo_rule("//toolchain/local/triplet:repository.bzl", "triplet")
+triplet = use_repo_rule("//toolchain/local/triplet:defs.bzl", "toolchain_local_triplet")
 
 triplet(
     name = "local",

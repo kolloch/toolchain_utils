@@ -23,7 +23,7 @@ download_archive(
     ...,
 )
 
-toolchain_select = use_extension("@rules_toolchain//toolchain:defs.bzl", "toolchain_select")
+toolchain_select = use_extension("@rules_toolchain//toolchain/select:defs.bzl", "toolchain_select")
 toolchain_select(
     name = "python-local",
     map = {

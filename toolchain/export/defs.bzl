@@ -1,4 +1,4 @@
-load("//toolchain/export:extension.bzl", _export = "export")
+load(":extension.bzl", _export = "export")
 
 visibility("public")
 

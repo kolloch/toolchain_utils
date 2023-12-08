@@ -1,4 +1,5 @@
-load("@rules_toolchain//toolchain:defs.bzl", "toolchain_symlink_target", "toolchain_test")
+load("@rules_toolchain//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
+load("@rules_toolchain//toolchain/test:defs.bzl", "toolchain_test")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 toolchain_type(
