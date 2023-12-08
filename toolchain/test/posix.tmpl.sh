@@ -152,7 +152,7 @@ junit() (
   TESTS=$((COUNT / 2))
   readonly COUNT TESTS
   printf '<testsuite tests="%s">\n' "${TESTS}"
-  printf >&2 '1..%i\n' $((TESTS))
+  printf >&2 '1..%i\n' "${TESTS}"
   INDEX=1
   while ! test -z ${2+x}; do
     FILEPATH="${1}"
