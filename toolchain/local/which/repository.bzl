@@ -47,6 +47,7 @@ ATTRS = _ATTRS | {
     "stub": attr.label_keyed_string_dict(
         doc = "An executable to use when the local binary is not found on `PATH`.",
         default = {
+            ":stub.bat": "windows",
             ":stub.sh": "//conditions:default",
         },
         allow_files = [".bat", ".sh"],
@@ -56,10 +57,18 @@ ATTRS = _ATTRS | {
     "entrypoint": attr.label_keyed_string_dict(
         doc = "An executable entrypoint template for hermetic rulesets.",
         default = {
+            ":entrypoint.tmpl.bat": "windows",
             ":entrypoint.tmpl.sh": "//conditions:default",
         },
         allow_files = [".bat", ".sh"],
         allow_empty = False,
+        cfg = "exec",
+    ),
+    "launcher": attr.label(
+        doc = "An executable that can be symlinked and will launch an adjacent script.",
+        default = "@launcher",
+        allow_single_file = True,
+        executable = True,
         cfg = "exec",
     ),
 }
@@ -81,9 +90,12 @@ def implementation(rctx):
         "{{basename}}": basename,
     }, executable = False)
 
-    rctx.template("entrypoint", entrypoint, {
+    _, extension = rctx.path(entrypoint).basename.rsplit(".", 1)
+    rctx.template("entrypoint.{}".format(extension), entrypoint, {
         "{{path}}": str(path.realpath),
     }, executable = True)
+
+    rctx.symlink(rctx.attr.launcher, "entrypoint")
 
     rctx.template("BUILD.bazel", rctx.attr.build, {
         "{{name}}": rctx.attr.target or program,
