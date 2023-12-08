@@ -60,7 +60,7 @@ def implementation(ctx):
     basename = ctx.attr.basename or ctx.label.name
     variable = ctx.attr.variable or basename.upper()
 
-    target = ctx.files.target[0]
+    target = ctx.executable.target
     extension = target.extension
     if extension in ("bat", "cmd"):
         basename = "{}.{}".format(basename, extension)
