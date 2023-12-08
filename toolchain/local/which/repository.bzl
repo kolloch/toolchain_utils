@@ -1,3 +1,4 @@
+load("//toolchain/local/select:resolve.bzl", resolve = "value")
 load("//toolchain:resolved.bzl", _ATTRS = "ATTRS")
 
 visibility("//toolchain/...")
@@ -43,18 +44,22 @@ ATTRS = _ATTRS | {
         default = ":BUILD.tmpl.bazel",
         allow_single_file = True,
     ),
-    "stub": attr.label(
+    "stub": attr.label_keyed_string_dict(
         doc = "An executable to use when the local binary is not found on `PATH`.",
-        default = ":stub.sh",
-        allow_single_file = True,
-        executable = True,
+        default = {
+            ":stub.sh": "//conditions:default",
+        },
+        allow_files = [".bat", ".sh"],
+        allow_empty = False,
         cfg = "exec",
     ),
-    "entrypoint": attr.label(
+    "entrypoint": attr.label_keyed_string_dict(
         doc = "An executable entrypoint template for hermetic rulesets.",
-        default = ":entrypoint.tmpl.sh",
-        allow_single_file = True,
-        executable = True,
+        default = {
+            ":entrypoint.tmpl.sh": "//conditions:default",
+        },
+        allow_files = [".bat", ".sh"],
+        allow_empty = False,
         cfg = "exec",
     ),
 }
@@ -62,19 +67,21 @@ ATTRS = _ATTRS | {
 def implementation(rctx):
     program = rctx.attr.program or rctx.attr.name.rsplit("~", 1)[1]
     basename = rctx.attr.basename or program
+    stub = resolve(rctx.attr.stub)
+    entrypoint = resolve(rctx.attr.entrypoint)
 
     path = rctx.which(program)
     if not path:
         if rctx.attr.mandatory:
             fail("Cannot find `{}` on `PATH`".format(program))
-        path = rctx.path(rctx.attr.stub)
+        path = rctx.path(stub)
 
     rctx.template("resolved.bzl", rctx.attr.resolved, {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
         "{{basename}}": basename,
     }, executable = False)
 
-    rctx.template("entrypoint", rctx.attr.entrypoint, {
+    rctx.template("entrypoint", entrypoint, {
         "{{path}}": str(path.realpath),
     }, executable = True)
 
