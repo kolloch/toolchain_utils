@@ -42,7 +42,7 @@ def implementation(ctx):
         fail("Only one toolchain can be provided")
     toolchain = ctx.attr.toolchains[0][platform_common.ToolchainInfo]
 
-    executable = ctx.actions.declare_file("{}.{}".format(ctx.label.name, ctx.file.template.extension))
+    executable = ctx.actions.declare_file("toolchain/test/{}.{}".format(ctx.label.name, ctx.file.template.extension))
 
     substitutions = ctx.actions.template_dict()
     substitutions.add("{{executable}}", str(toolchain.executable.short_path))

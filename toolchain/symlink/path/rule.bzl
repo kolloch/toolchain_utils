@@ -36,7 +36,7 @@ def implementation(ctx):
     elif not extension and "." not in basename and ctx.target_platform_has_constraint(windows):
         basename = "{}.exe".format(basename)
 
-    executable = ctx.actions.declare_symlink(basename)
+    executable = ctx.actions.declare_symlink("toolchain/symlink/path/{}".format(basename))
     ctx.actions.symlink(
         output = executable,
         target_path = ctx.attr.path,
