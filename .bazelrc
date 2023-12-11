@@ -10,5 +10,8 @@ build --incompatible_strict_action_env
 # Prevent symlink forest under `.runfiles/wsname/external/repo`
 build --nolegacy_external_runfiles
 
+# Avoid building all targets when testing
+test --build_tests_only
+
 # User-specific .bazelrc
 try-import %workspace%/.bazelrc.user
