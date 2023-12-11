@@ -21,16 +21,23 @@ ATTRS = {
         doc = "The toolchain type to resolve and forward on providers.",
         mandatory = True,
     ),
+    "_windows": attr.label(
+        providers = [platform_common.ConstraintValueInfo],
+        default = "//toolchain/constraint/os:windows",
+    ),
 }
 
 def implementation(ctx):
     basename = ctx.attr.basename or ctx.label.name
     toolchain = ctx.toolchains[ctx.attr.toolchain_type.label]
+    windows = ctx.attr._windows[platform_common.ConstraintValueInfo]
 
     target = toolchain.executable
     extension = target.extension
     if extension in ("bat", "cmd"):
         basename = "{}.{}".format(basename, extension)
+    elif not extension and "." not in basename and ctx.target_platform_has_constraint(windows):
+        basename = "{}.exe".format(basename)
 
     executable = ctx.actions.declare_file(basename)
     ctx.actions.symlink(
