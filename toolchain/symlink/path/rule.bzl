@@ -36,11 +36,27 @@ def implementation(ctx):
     elif not extension and "." not in basename and ctx.target_platform_has_constraint(windows):
         basename = "{}.exe".format(basename)
 
-    executable = ctx.actions.declare_symlink("toolchain/symlink/path/{}".format(basename))
-    ctx.actions.symlink(
-        output = executable,
-        target_path = ctx.attr.path,
-    )
+    if ctx.target_platform_has_constraint(windows):
+        executable = ctx.actions.declare_file("toolchain/symlink/path/{}".format(basename))
+
+        args = ctx.actions.args()
+        args.add("/c")
+        args.add("mklink")
+        args.add("/h")
+        args.add(executable.path, format = '"%s"')
+        args.add(ctx.attr.path, format = '"%s"')
+
+        ctx.actions.run(
+            outputs = [executable],
+            executable = "cmd.exe",
+            arguments = [args],
+        )
+    else:
+        executable = ctx.actions.declare_symlink("toolchain/symlink/path/{}".format(basename))
+        ctx.actions.symlink(
+            output = executable,
+            target_path = ctx.attr.path,
+        )
 
     variables = platform_common.TemplateVariableInfo({
         variable: executable.path,
