@@ -72,7 +72,15 @@ toolchain(
 To create a hermetic toolchain from a downloaded target:
 
 ```py
-# Assume `:echo-arm64-linux-gnu` is a downloaded `echo` binary
+load("@rules_toolchain//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
+
+# Create the necessary toolchain providers around the downloaded target
+toolchain_symlink_target(
+    name = "echo-arm64-linux-gnu",
+    target = ":downloaded-echo-arm64-linux-gnu"
+)
+
+# Register with the correct contraints
 toolchain(
     name = "arm64-linux",
     toolchain = ":echo-arm64-linux-gnu",
