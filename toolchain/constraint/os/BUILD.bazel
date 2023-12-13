@@ -12,5 +12,5 @@ alias(
 
 alias(
     name = "macos",
-    actual = "@platforms//os:windows",
+    actual = "@platforms//os:macos",
 )
