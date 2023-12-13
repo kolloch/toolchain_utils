@@ -61,6 +61,14 @@ def _uname(rctx, path):
     Returns:
       The `VersionedInfo` provider
     """
+    result = rctx.execute((path, "-s"))
+    if result.return_code != 0:
+        fail("Failed to get `uname` kernel: {}".format(result.stderr))
+
+    kernel = {
+        "Linux": "linux",
+    }[result.stdout.strip()]
+
     result = rctx.execute((path, "-r"))
     if result.return_code != 0:
         fail("Failed to get `uname` release: {}".format(result.stderr))
@@ -72,9 +80,9 @@ def _uname(rctx, path):
     })
 
     if rctx.path("/.dockerenv").exists:
-        print("`uname` release is the host kernel inside a container. We recommend installing `/usr/include/linux/version.h` into the container.")
+        print("`uname` release is the host kernel inside a container.")
 
-    return VersionedInfo("linux.{}.{}.{}".format(int(major), int(minor), int(patch)))
+    return VersionedInfo("{}.{}.{}.{}".format(kernel, int(major), int(minor), int(patch)))
 
 def _cmd(rctx, path):
     """
