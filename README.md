@@ -9,12 +9,12 @@ Add the following to `MODULE.bazel`:
 ```py
 which = use_repo_rule("@rules_toolchain//toolchain/local/which:defs.bzl", "toolchain_local_which")
 which(
-    name = "which",
+    name = "which-echo",
 )
 
 resolved = use_repo_rule("@rules_toolchain//toolchain/resolved:defs.bzl", "toolchain_resolved")
 resolved(
-    name = "resolved",
+    name = "resolved-echo",
     toolchain_type = "//toolchain/echo:type",
 )
 ```
@@ -34,7 +34,7 @@ toolchain_type(
 # No `exec_compatible_with` constraints are needed as a local binary is always compatible with the execution platform
 toolchain(
     name = "local",
-    toolchain = "@which//:echo",
+    toolchain = "@which-echo",
     toolchain_type = ":type",
 )
 
@@ -42,7 +42,7 @@ toolchain(
 #   bazel run -- //toolchain/echo:resolved
 alias(
     name = "resolved",
-    actual = "@resolved",
+    actual = "@resolved-echo",
 )
 
 # Performs a execution test of the binary
