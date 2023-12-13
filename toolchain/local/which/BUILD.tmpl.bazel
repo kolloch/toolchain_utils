@@ -1,19 +1,13 @@
 load("@rules_toolchain//toolchain/symlink/path:defs.bzl", "toolchain_symlink_path")
-load("//:resolved.bzl", "resolved")
 
 package(default_visibility = ["//visibility:public"])
 
 exports_files(["entrypoint"])
 
 toolchain_symlink_path(
-    name = "{{name}}",
+    name = "{{target}}",
+    basename = "{{basename}}",
     path = "{{path}}",
     tags = ["no-remote"],
     variable = "{{variable}}",
-)
-
-resolved(
-    name = "resolved",
-    basename = "{{basename}}",
-    toolchain_type = "{{toolchain_type}}",
 )

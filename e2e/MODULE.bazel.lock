@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "b5e5212db85ac60ce843baccd184e5d16937d6d310b430f73224a70d9bf8cfa1",
+  "moduleFileHash": "3c21bacae5326234a6afdf5d19ca2491b22cb87d53c9c262c9ede6b26281c4d0",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -37,8 +37,8 @@
             "column": 0
           },
           "imports": {
-            "echo": "echo",
-            "resolved": "resolved",
+            "which-echo": "which-echo",
+            "resolved-echo": "resolved-echo",
             "fixture-amd64-linux-gnu": "fixture-amd64-linux-gnu",
             "fixture-arm64-linux-gnu": "fixture-arm64-linux-gnu",
             "fixture-arm-linux-musl": "fixture-arm-linux-musl",
@@ -51,8 +51,7 @@
             {
               "tagName": "@rules_toolchain//toolchain/local/which:defs.bzl%toolchain_local_which",
               "attributeValues": {
-                "toolchain_type": "//toolchain/echo:type",
-                "name": "echo"
+                "name": "which-echo"
               },
               "devDependency": false,
               "location": {
@@ -65,12 +64,12 @@
               "tagName": "@rules_toolchain//toolchain/resolved:defs.bzl%toolchain_resolved",
               "attributeValues": {
                 "toolchain_type": "//toolchain/echo:type",
-                "name": "resolved"
+                "name": "resolved-echo"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 24,
+                "line": 23,
                 "column": 9
               }
             },
@@ -82,7 +81,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 33,
+                "line": 32,
                 "column": 8
               }
             },
@@ -94,7 +93,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 37,
+                "line": 36,
                 "column": 8
               }
             },
@@ -106,7 +105,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 41,
+                "line": 40,
                 "column": 8
               }
             },
@@ -118,7 +117,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 45,
+                "line": 44,
                 "column": 8
               }
             },
@@ -130,7 +129,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 49,
+                "line": 48,
                 "column": 8
               }
             },
@@ -148,7 +147,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 55,
+                "line": 54,
                 "column": 7
               }
             }
@@ -162,7 +161,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 65,
+            "line": 64,
             "column": 23
           },
           "imports": {
@@ -179,7 +178,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 66,
+                "line": 65,
                 "column": 15
               }
             }
@@ -848,24 +847,23 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "0/0JKbXjdx0+MCsL4hbq33HmaZLsejCHZ1wZeOcD9Es=",
+        "bzlTransitiveDigest": "DcS7hkCR97tWU6RFIoqiRZfRyhn8MoWr0X40xcNtOZg=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "echo": {
+          "which-echo": {
             "bzlFile": "@@rules_toolchain~override//toolchain/local/which:repository.bzl",
             "ruleClassName": "which",
             "attributes": {
-              "toolchain_type": "@@//toolchain/echo:type",
-              "name": "_main~_repo_rules~echo"
+              "name": "_main~_repo_rules~which-echo"
             }
           },
-          "resolved": {
+          "resolved-echo": {
             "bzlFile": "@@rules_toolchain~override//toolchain/resolved:repository.bzl",
             "ruleClassName": "resolved",
             "attributes": {
               "toolchain_type": "@@//toolchain/echo:type",
-              "name": "_main~_repo_rules~resolved"
+              "name": "_main~_repo_rules~resolved-echo"
             }
           },
           "fixture-amd64-linux-gnu": {

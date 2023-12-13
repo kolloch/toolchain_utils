@@ -9,7 +9,7 @@ toolchain_type(
 
 toolchain(
     name = "local",
-    toolchain = "@echo//:echo",
+    toolchain = "@which-echo",
     toolchain_type = ":type",
 )
 
@@ -29,7 +29,7 @@ toolchain(
 
 alias(
     name = "resolved",
-    actual = "@echo//:resolved",
+    actual = "@resolved-echo",
 )
 
 toolchain_test(
@@ -41,5 +41,5 @@ toolchain_test(
 
 build_test(
     name = "entrypoint",
-    targets = ["@echo//:entrypoint"],
+    targets = ["@which-echo//:entrypoint"],
 )

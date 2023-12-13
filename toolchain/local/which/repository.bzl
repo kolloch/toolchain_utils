@@ -1,5 +1,4 @@
 load("//toolchain/local/select:resolve.bzl", resolve = "value")
-load("//toolchain:resolved.bzl", _ATTRS = "ATTRS")
 
 visibility("//toolchain/...")
 
@@ -15,44 +14,27 @@ Consuming this target as a toolchain is trivial:
 toolchain(
     name = "local",
     toolchain = "@echo",
-    toolchain_type = ":type",
 )
 ```
 """
 
-ATTRS = _ATTRS | {
+ATTRS = {
     "program": attr.string(
         doc = "The name of the binary to find on `PATH`.",
     ),
     "target": attr.string(
         doc = "The name of the Bazel target to expose around the binary.",
     ),
+    "basename": attr.string(
+        doc = "The basename for the symlink, which defaults to `program`",
+    ),
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment.",
-    ),
-    "mandatory": attr.bool(
-        doc = "Determines if the tool must exist locally",
-        default = False,
-    ),
-    "resolved": attr.label(
-        doc = "The tepmlate that is expanded into the `resolved.bzl`.",
-        default = "//toolchain/resolved:resolved.tmpl.bzl",
-        allow_single_file = True,
     ),
     "build": attr.label(
         doc = "The template that is expanded into the `BUILD.bazel`.",
         default = ":BUILD.tmpl.bazel",
         allow_single_file = True,
-    ),
-    "stub": attr.label_keyed_string_dict(
-        doc = "An executable to use when the local binary is not found on `PATH`.",
-        default = {
-            ":stub.bat": "windows",
-            ":stub.sh": "//conditions:default",
-        },
-        allow_files = [".bat", ".sh"],
-        allow_empty = False,
-        cfg = "exec",
     ),
     "entrypoint": attr.label_keyed_string_dict(
         doc = "An executable entrypoint template for hermetic rulesets.",
@@ -74,21 +56,15 @@ ATTRS = _ATTRS | {
 }
 
 def implementation(rctx):
-    program = rctx.attr.program or rctx.attr.name.rsplit("~", 1)[1]
+    program = rctx.attr.program or rctx.attr.name.rsplit("~", 1)[1].removeprefix("which-")
+    target = rctx.attr.target or rctx.attr.name.rsplit("~", 1)[1]
     basename = rctx.attr.basename or program
-    stub = resolve(rctx.attr.stub)
+    variable = rctx.attr.variable or basename.upper()
     entrypoint = resolve(rctx.attr.entrypoint)
 
     path = rctx.which(program)
     if not path:
-        if rctx.attr.mandatory:
-            fail("Cannot find `{}` on `PATH`".format(program))
-        path = rctx.path(stub)
-
-    rctx.template("resolved.bzl", rctx.attr.resolved, {
-        "{{toolchain_type}}": str(rctx.attr.toolchain_type),
-        "{{basename}}": basename,
-    }, executable = False)
+        fail("Cannot find `{}` on `PATH`".format(program))
 
     _, extension = rctx.path(entrypoint).basename.rsplit(".", 1)
     rctx.template("entrypoint.{}".format(extension), entrypoint, {
@@ -98,12 +74,11 @@ def implementation(rctx):
     rctx.symlink(rctx.attr.launcher, "entrypoint")
 
     rctx.template("BUILD.bazel", rctx.attr.build, {
-        "{{name}}": rctx.attr.target or program,
+        "{{target}}": target,
         "{{program}}": program,
         "{{basename}}": basename,
         "{{path}}": str(path.realpath),
-        "{{variable}}": rctx.attr.variable or program.upper(),
-        "{{toolchain_type}}": str(rctx.attr.toolchain_type),
+        "{{variable}}": variable,
     }, executable = False)
 
 which = repository_rule(

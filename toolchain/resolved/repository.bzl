@@ -17,6 +17,9 @@ toolchain_resolved(
 """
 
 ATTRS = _ATTRS | {
+    "target": attr.string(
+        doc = "The name of the Bazel target for the `resolved` rule.",
+    ),
     "resolved": attr.label(
         doc = "The template that is expanded into the `resolved.bzl`.",
         default = Label(":resolved.tmpl.bzl"),
@@ -33,6 +36,7 @@ def implementation(rctx):
     substitutions = {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
         "{{basename}}": str(rctx.attr.basename),
+        "{{target}}": rctx.attr.target or rctx.attr.name.rsplit("~", 1)[1],
     }
     rctx.template("resolved.bzl", rctx.attr.resolved, substitutions, executable = False)
     rctx.template("BUILD.bazel", rctx.attr.build, substitutions, executable = False)
