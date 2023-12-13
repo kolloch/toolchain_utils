@@ -1,0 +1,13 @@
+load(":versions.bzl", "VERSIONS")
+
+package(default_visibility = ["//visibility:public"])
+
+constraint_setting(name = "darwin")
+
+[
+    constraint_value(
+        name = version,
+        constraint_setting = ":darwin",
+    )
+    for version in VERSIONS
+]

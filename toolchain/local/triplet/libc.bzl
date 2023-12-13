@@ -66,6 +66,34 @@ def _powershell(rctx, path):
 
     return VersionedInfo("ucrt.{}.{}.{}".format(int(major), int(minor), int(build)))
 
+def _uname(rctx, path):
+    result = rctx.execute((path, "-s"))
+    if result.return_code != 0:
+        fail("Failed to retrieve `uanme` kernel:\n{}".format(result.stderr))
+
+    names = {
+        "Darwin": "darwin",
+    }
+
+    name = result.stdout.strip()
+
+    if name not in names:
+        fail("Unsupported `libc` version from `uname`: {}".format(name))
+
+    name = names[name]
+
+    result = rctx.execute((path, "-r"))
+    if result.return_code != 0:
+        fail("Failed to retrieve `uanme` vresion:\n{}".format(result.stderr))
+
+    version = result.stdout.strip()
+
+    major, minor, patch = split(version, ".", {
+        3: lambda x, y, z: (x, y, z),
+    })
+
+    return VersionedInfo("{}.{}.{}.{}".format(name, int(major), int(minor), int(patch)))
+
 def libc(rctx):
     """
     Detects the host C library.
@@ -87,5 +115,9 @@ def libc(rctx):
     path = rctx.which("powershell.exe")
     if path:
         return _powershell(rctx, path)
+
+    path = rctx.which("uname")
+    if path:
+        return _uname(rctx, path)
 
     fail("Failed to detect host C library")

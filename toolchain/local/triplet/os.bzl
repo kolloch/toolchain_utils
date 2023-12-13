@@ -50,6 +50,37 @@ def _header(rctx, path):
 
     return VersionedInfo("linux.{}.{}.{}".format(major, minor, patch))
 
+def _sw_vers(rctx, path):
+    """
+    Determines the operating system version from `sw_vers`.
+
+    Args:
+      rctx: The repository context that can execute commands on the host machine.
+      path: the path to the `sw_vers` executable.
+
+    Returns:
+      The `VersionedInfo` provider
+    """
+    result = rctx.execute((path, "-productName"))
+    if result.return_code != 0:
+        fail("Failed to get `sw_vers` product name: {}".format(result.stderr))
+
+    name = {
+        "macOS": "macos",
+    }[result.stdout.strip()]
+
+    result = rctx.execute((path, "-productVersion"))
+    if result.return_code != 0:
+        fail("Failed to get `sw_vers` product version: {}".format(result.stderr))
+
+    version = result.stdout.strip()
+
+    major, minor, patch = split(version, ".", {
+        3: lambda x, y, z: (x, y, z),
+    })
+
+    return VersionedInfo("{}.{}.{}.{}".format(name, int(major), int(minor), int(patch)))
+
 def _uname(rctx, path):
     """
     Determines the operating system version from `uname`
@@ -126,6 +157,10 @@ def os(rctx):
     path = rctx.path("/usr/include/linux/version.h")
     if path.exists:
         return _header(rctx, path)
+
+    path = rctx.which("sw_vers")
+    if path:
+        return _sw_vers(rctx, path)
 
     path = rctx.which("uname")
     if path:

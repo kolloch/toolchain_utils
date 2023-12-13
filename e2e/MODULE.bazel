@@ -46,7 +46,7 @@ fixture(
 )
 
 fixture(
-    name = "fixture-arm64-windows-ucrt",
+    name = "fixture-arm64-macos-darwin",
 )
 
 select = use_repo_rule("@rules_toolchain//toolchain/local/select:defs.bzl", "toolchain_local_select")
@@ -58,6 +58,7 @@ select(
         "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
         "arm-linux-musl": "@fixture-arm-linux-musl",
         "windows-ucrt": "@fixture-windows-ucrt",
+        "arm64-macos-darwin": "@fixture-arm64-macos-darwin",
     },
 )
 

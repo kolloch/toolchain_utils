@@ -9,3 +9,8 @@ alias(
     name = "windows",
     actual = "@platforms//os:windows",
 )
+
+alias(
+    name = "macos",
+    actual = "@platforms//os:windows",
+)
