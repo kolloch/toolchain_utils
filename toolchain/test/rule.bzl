@@ -35,6 +35,10 @@ Can be overridden to a custom script that receives the following replacements:
         default = ":template",
         allow_single_file = True,
     ),
+    "status": attr.int(
+        doc = "The expected status code from the toolchain binary.",
+        default = 0,
+    ),
 }
 
 def implementation(ctx):
@@ -48,6 +52,7 @@ def implementation(ctx):
     substitutions.add("{{executable}}", str(toolchain.executable.short_path))
     substitutions.add("{{stdout}}", str(ctx.file.stdout.short_path))
     substitutions.add("{{stderr}}", str(ctx.file.stderr.short_path))
+    substitutions.add("{{status}}", str(ctx.attr.status))
 
     ctx.actions.expand_template(
         template = ctx.file.template,

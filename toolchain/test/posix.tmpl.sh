@@ -8,15 +8,18 @@ set -eu
 EXECUTABLE="{{executable}}"
 STDOUT="{{stdout}}"
 STDERR="{{stderr}}"
-readonly EXECUTABLE STDOUT STDERR
+STATUS="{{status}}"
+readonly EXECUTABLE STDOUT STDERR STATUS
 
 # Test environment
 JUNIT="${XML_OUTPUT_FILE-junit.xml}"
 readonly JUNIT
 
 # Run the toolchain executable and validate the output
-if ! "${EXECUTABLE}" "${@}" >stdout.txt 2>stderr.txt; then
-  echo >&2 "Failed to run: ${EXECUTABLE} ${*}"
+"${EXECUTABLE}" "${@}" >stdout.txt 2>stderr.txt && CODE=$? || CODE=$?
+readonly CODE
+if test "${STATUS}" != "${CODE}"; then
+  echo >&2 "Failed to run (${CODE}): ${EXECUTABLE} ${*}"
   echo >&2 "stdout:"
   while IFS= read -r LINE; do
     echo >&2 "${LINE}"

@@ -21,6 +21,7 @@ setlocal DisableDelayedExpansion
 set "EXECUTABLE={{executable}}"
 set "STDOUT={{stdout}}"
 set "STDERR={{stderr}}"
+set "STATUS={{status}}"
 
 :: Runfiles
 if [%RUNFILES_MANIFEST_ONLY%] neq [1] (
@@ -45,8 +46,8 @@ for /f %%a in ("%EXECUTABLE%") do set EXTENSION=%%~xa
 if "%EXTENSION%" == ".bat" set LAUNCHER=call
 %LAUNCHER% "%EXECUTABLE%" %* >stdout.txt 2>stderr.txt
 set "CODE=%ERRORLEVEL%"
-if %CODE% neq 0 (
-  >&2 echo.Failed to run: %EXECUTABLE% %*
+if %CODE% neq %STATUS% (
+  >&2 echo.Failed to run ^(%STATUS^): %EXECUTABLE% %*
   >&2 echo.stdout:
   >&2 type stdout.txt
   >&2 echo.stderr:
