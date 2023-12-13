@@ -41,5 +41,8 @@ toolchain_test(
 
 build_test(
     name = "entrypoint",
+    target_compatible_with = [
+        "@rules_toolchain//toolchain/constraint/os:linux",
+    ],
     targets = ["@which-echo//:entrypoint"],
 )
