@@ -1,7 +1,7 @@
 module(
     name = "e2e",
     bazel_compatibility = [
-        ">=6.4.0",
+        ">=7.0.0",
     ],
 )
 

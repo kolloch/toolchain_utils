@@ -2,7 +2,7 @@ module(
     name = "rules_toolchain",
     version = "0.0.0",
     bazel_compatibility = [
-        ">=6.4.0",
+        ">=7.0.0",
     ],
 )
 
