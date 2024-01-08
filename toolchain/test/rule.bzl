@@ -8,6 +8,7 @@ Can be set to the following values for special handling:
 
 - `@rules_toolchain//toolchain/test:non-empty`: accept any non-empty output
 - `@rules_toolchain//toolchain/test:empty`: require empty output
+- `@rules_toolchain//toolchain/test:any`: require any output
 """,
         default = ":non-empty",
         allow_single_file = True,
@@ -19,6 +20,7 @@ Can be set to the following values for special handling:
 
 - `@rules_toolchain//toolchain/test:non-empty`: accept any non-empty output
 - `@rules_toolchain//toolchain/test:empty`: require empty output
+- `@rules_toolchain//toolchain/test:any`: require any output
 """,
         default = ":empty",
         allow_single_file = True,
