@@ -83,10 +83,13 @@ def implementation(ctx):
         variable: executable.path,
     })
 
+    runfiles = ctx.runfiles(ctx.attr.data + [executable])
+    runfiles = runfiles.merge(ctx.attr.target.default_runfiles)
+
     default = DefaultInfo(
         executable = executable,
         files = depset([executable]),
-        runfiles = ctx.runfiles(ctx.attr.data + [executable]),
+        runfiles = runfiles,
     )
 
     toolchain = platform_common.ToolchainInfo(
