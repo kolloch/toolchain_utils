@@ -61,10 +61,13 @@ def implementation(ctx):
         is_executable = True,
     )
 
+    runfiles = ctx.runfiles([toolchain.executable, ctx.file.stdout, ctx.file.stderr])
+    runfiles = runfiles.merge(toolchain.default.default_runfiles)
+
     return DefaultInfo(
         executable = executable,
         files = depset([executable]),
-        runfiles = ctx.runfiles([toolchain.executable, ctx.file.stdout, ctx.file.stderr]),
+        runfiles = runfiles,
     )
 
 toolchain_test = rule(
