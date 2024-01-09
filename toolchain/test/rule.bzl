@@ -63,7 +63,7 @@ def implementation(ctx):
         is_executable = True,
     )
 
-    runfiles = ctx.runfiles([toolchain.executable, ctx.file.stdout, ctx.file.stderr])
+    runfiles = ctx.runfiles([executable, toolchain.executable, ctx.file.stdout, ctx.file.stderr])
     runfiles = runfiles.merge(toolchain.default.default_runfiles)
 
     return DefaultInfo(
