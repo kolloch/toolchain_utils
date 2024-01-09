@@ -111,7 +111,7 @@ diff() (
     fi
   done 3<"${FILEPATH}" 4<"${EXPECTED}"
 
-  printf >&2 'ok %s - %s was a non-empty file\n' "${INDEX}" "${FILEPATH}"
+  printf >&2 'ok %s - %s was equal to %s\n' "${INDEX}" "${FILEPATH}" "${EXPECTED}"
   printf '  <testcase name="%s"/>\n' "${FILEPATH}"
 )
 
