@@ -76,6 +76,8 @@ def _sw_vers(rctx, path):
     version = result.stdout.strip()
 
     major, minor, patch = split(version, ".", {
+        1: lambda x: (x, 0, 0),
+        2: lambda x, y: (x, y, 0),
         3: lambda x, y, z: (x, y, z),
     })
 
