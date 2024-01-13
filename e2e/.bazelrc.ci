@@ -16,14 +16,8 @@ common --show_timestamps
 # Do not wrap any output
 common --terminal_columns=0
 
-# Print relative paths where possible to reduce noise
-common --attempt_to_print_relative_paths
-
 # Output as much information in the CI log about failures as possible
 build --verbose_failures
-
-# Avoid building all targets when testing
-test --build_tests_only
 
 # Noisy logs but allows debugging CI run failures
 test --test_output=errors

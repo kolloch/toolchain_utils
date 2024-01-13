@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "297f2866ac15a1b665de4491ce5b56c8537ce27bfaad34eb6038e7e1057c4fe6",
+  "moduleFileHash": "fcb691c2ea50577edc395eeba55b61d73347497ed345776b4af6e246a6d484b1",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -44,6 +44,7 @@
             "fixture-arm-linux-musl": "fixture-arm-linux-musl",
             "fixture-windows-ucrt": "fixture-windows-ucrt",
             "fixture-arm64-macos-darwin": "fixture-arm64-macos-darwin",
+            "fixture-amd64-macos-darwin": "fixture-amd64-macos-darwin",
             "fixture": "fixture"
           },
           "devImports": [],
@@ -134,6 +135,18 @@
               }
             },
             {
+              "tagName": "//test/fixture:repository.bzl%fixture",
+              "attributeValues": {
+                "name": "fixture-amd64-macos-darwin"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 52,
+                "column": 8
+              }
+            },
+            {
               "tagName": "@rules_toolchain//toolchain/local/select:defs.bzl%toolchain_local_select",
               "attributeValues": {
                 "map": {
@@ -141,14 +154,15 @@
                   "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
                   "arm-linux-musl": "@fixture-arm-linux-musl",
                   "windows-ucrt": "@fixture-windows-ucrt",
-                  "arm64-macos-darwin": "@fixture-arm64-macos-darwin"
+                  "arm64-macos-darwin": "@fixture-arm64-macos-darwin",
+                  "amd64-macos-darwin": "@fixture-amd64-macos-darwin"
                 },
                 "name": "fixture"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 54,
+                "line": 58,
                 "column": 7
               }
             }
@@ -162,7 +176,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 65,
+            "line": 70,
             "column": 23
           },
           "imports": {
@@ -179,7 +193,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 66,
+                "line": 71,
                 "column": 15
               }
             }
@@ -902,6 +916,13 @@
               "name": "_main~_repo_rules~fixture-arm64-macos-darwin"
             }
           },
+          "fixture-amd64-macos-darwin": {
+            "bzlFile": "@@//test/fixture:repository.bzl",
+            "ruleClassName": "fixture",
+            "attributes": {
+              "name": "_main~_repo_rules~fixture-amd64-macos-darwin"
+            }
+          },
           "fixture": {
             "bzlFile": "@@rules_toolchain~override//toolchain/local/select:repository.bzl",
             "ruleClassName": "select",
@@ -911,7 +932,8 @@
                 "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
                 "arm-linux-musl": "@fixture-arm-linux-musl",
                 "windows-ucrt": "@fixture-windows-ucrt",
-                "arm64-macos-darwin": "@fixture-arm64-macos-darwin"
+                "arm64-macos-darwin": "@fixture-arm64-macos-darwin",
+                "amd64-macos-darwin": "@fixture-amd64-macos-darwin"
               },
               "name": "_main~_repo_rules~fixture"
             }
@@ -1523,7 +1545,7 @@
     },
     "@@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "qXc+t+XkxFhCAlOIhCr8I+ndLztHFOWGoNs6UXtP95k=",
+        "bzlTransitiveDigest": "N8Ehl02dLIrmCn7Ff5iLyKwfbBa0ZnVCw5quAS8d+Yw=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {

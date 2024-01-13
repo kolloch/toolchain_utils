@@ -13,5 +13,8 @@ build --nolegacy_external_runfiles
 # Avoid building all targets when testing
 test --build_tests_only
 
+# Print relative paths where possible to reduce noise
+common --attempt_to_print_relative_paths
+
 # User-specific .bazelrc
 try-import %workspace%/.bazelrc.user
