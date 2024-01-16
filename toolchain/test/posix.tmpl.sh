@@ -177,4 +177,3 @@ while IFS= read -r LINE; do
     exit 1
   fi
 done <"${JUNIT}"
-
