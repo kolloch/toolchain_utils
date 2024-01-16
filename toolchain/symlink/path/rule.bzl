@@ -1,5 +1,33 @@
 visibility("//toolchain/...")
 
+DOC = """Creates a executable symlink to a binary path.
+
+This rule can be used to symlink a executable file outside of the workspace.
+
+The external executable become part of the Bazel target graph.
+
+It exports the necessary providers for the target to be easily ingested by the native `toolchain` rule.
+
+```
+toolchain_type(
+    name = "type",
+)
+
+toolchain_symlink_path(
+    name = "gcc-local",
+    path = "/usr/bin/gcc",
+)
+
+toolchain(
+    name = "local",
+    toolchain = ":gcc-local",
+    toolchain_type = ":type",
+)
+```
+
+_Commonly_, this target is not used directly and the `local.which` extension is used that looks up a binary on a path.
+"""
+
 ATTRS = {
     "path": attr.string(
         doc = "The path to a binary to symlink.",
@@ -77,33 +105,7 @@ def implementation(ctx):
     return [variables, toolchain, default]
 
 path = rule(
-    doc = """Creates a executable symlink to a binary path.
-
-This rule can be used to symlink a executable file outside of the workspace.
-
-The external executable become part of the Bazel target graph.
-
-It exports the necessary providers for the target to be easily ingested by the native `toolchain` rule.
-
-```
-toolchain_type(
-    name = "type",
-)
-
-toolchain_symlink_path(
-    name = "gcc-local",
-    path = "/usr/bin/gcc",
-)
-
-toolchain(
-    name = "local",
-    toolchain = ":gcc-local",
-    toolchain_type = ":type",
-)
-```
-
-_Commonly_, this target is not used directly and the `local.which` extension is used that looks up a binary on a path.
-""",
+    doc = DOC,
     attrs = ATTRS,
     implementation = implementation,
     provides = [
