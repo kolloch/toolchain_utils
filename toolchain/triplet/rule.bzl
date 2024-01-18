@@ -19,7 +19,7 @@ def implementation(ctx):
     value = ctx.attr.value or ctx.label.name
     triplet = TripletInfo(value)
 
-    output = ctx.actions.declare_file("toolchain/triplet/{}.txt".format(value))
+    output = ctx.actions.declare_file("{}/{}.txt".format(ctx.label.name, value))
     ctx.actions.write(
         output = output,
         content = value,
@@ -28,7 +28,7 @@ def implementation(ctx):
     substitutions = ctx.actions.template_dict()
     substitutions.add("{{triplet}}", value)
 
-    executable = ctx.actions.declare_file("toolchain/triplet/{}.{}".format(value, ctx.file.template.extension))
+    executable = ctx.actions.declare_file("{}/{}.{}".format(ctx.label.name, value, ctx.file.template.extension))
     ctx.actions.expand_template(
         output = executable,
         template = ctx.file.template,

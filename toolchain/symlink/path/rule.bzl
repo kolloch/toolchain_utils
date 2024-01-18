@@ -57,13 +57,14 @@ def implementation(ctx):
     windows = ctx.attr._windows[platform_common.ConstraintValueInfo]
 
     _, extension = paths.split_extension(ctx.attr.path)
-    if extension in ("bat", "cmd"):
-        basename = "{}.{}".format(basename, extension)
+    if extension in (".bat", ".cmd"):
+        basename = basename + extension
     elif not extension and "." not in basename and ctx.target_platform_has_constraint(windows):
         basename = "{}.exe".format(basename)
 
+    filepath = "{}/{}".format(ctx.label.name, basename)
     if ctx.target_platform_has_constraint(windows):
-        executable = ctx.actions.declare_file("toolchain/symlink/path/{}".format(basename))
+        executable = ctx.actions.declare_file(filepath)
 
         args = ctx.actions.args()
         args.add("/c")
@@ -78,7 +79,7 @@ def implementation(ctx):
             arguments = [args],
         )
     else:
-        executable = ctx.actions.declare_symlink("toolchain/symlink/path/{}".format(basename))
+        executable = ctx.actions.declare_symlink(filepath)
         ctx.actions.symlink(
             output = executable,
             target_path = ctx.attr.path,
