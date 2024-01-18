@@ -1,3 +1,5 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
 visibility("//toolchain/...")
 
 DOC = """Creates a executable symlink to a binary path.
@@ -54,11 +56,7 @@ def implementation(ctx):
     variable = ctx.attr.variable or basename.upper()
     windows = ctx.attr._windows[platform_common.ConstraintValueInfo]
 
-    if "." not in ctx.attr.path:
-        extension = None
-    else:
-        _, extension = ctx.attr.path.rsplit(".", 1)
-
+    _, extension = paths.split_extension(ctx.attr.path)
     if extension in ("bat", "cmd"):
         basename = "{}.{}".format(basename, extension)
     elif not extension and "." not in basename and ctx.target_platform_has_constraint(windows):
