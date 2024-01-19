@@ -39,7 +39,7 @@ ATTRS = {
         doc = "The basename for the symlink, which defaults to `name`",
     ),
     "variable": attr.string(
-        doc = "The variable name for Make or the execution environment.",
+        doc = "The variable name for Make or the execution environment. Defaults to `basename.upper()`",
     ),
     "data": attr.label_list(
         doc = "Extra files that are needed at runtime.",
