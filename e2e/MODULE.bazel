@@ -6,19 +6,19 @@ module(
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
-bazel_dep(name = "rules_toolchain", version = "0.0.0")
+bazel_dep(name = "toolchain_utils", version = "0.0.0")
 local_path_override(
-    module_name = "rules_toolchain",
+    module_name = "toolchain_utils",
     path = "..",
 )
 
-which = use_repo_rule("@rules_toolchain//toolchain/local/which:defs.bzl", "toolchain_local_which")
+which = use_repo_rule("@toolchain_utils//toolchain/local/which:defs.bzl", "toolchain_local_which")
 
 which(
     name = "which-echo",
 )
 
-resolved = use_repo_rule("@rules_toolchain//toolchain/resolved:defs.bzl", "toolchain_resolved")
+resolved = use_repo_rule("@toolchain_utils//toolchain/resolved:defs.bzl", "toolchain_resolved")
 
 resolved(
     name = "resolved-echo",
@@ -53,7 +53,7 @@ fixture(
     name = "fixture-amd64-macos-darwin",
 )
 
-select = use_repo_rule("@rules_toolchain//toolchain/local/select:defs.bzl", "toolchain_local_select")
+select = use_repo_rule("@toolchain_utils//toolchain/local/select:defs.bzl", "toolchain_local_select")
 
 select(
     name = "fixture",
@@ -67,7 +67,7 @@ select(
     },
 )
 
-export = use_extension("@rules_toolchain//toolchain/export:defs.bzl", "toolchain_export")
+export = use_extension("@toolchain_utils//toolchain/export:defs.bzl", "toolchain_export")
 export.symlink(
     name = "export",
     target = "@fixture",

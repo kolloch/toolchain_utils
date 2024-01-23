@@ -1,5 +1,5 @@
 module(
-    name = "rules_toolchain",
+    name = "toolchain_utils",
     version = "0.0.0",
     bazel_compatibility = [
         ">=7.0.0",

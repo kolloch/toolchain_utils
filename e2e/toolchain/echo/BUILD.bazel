@@ -1,5 +1,5 @@
-load("@rules_toolchain//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
-load("@rules_toolchain//toolchain/test:defs.bzl", "toolchain_test")
+load("@toolchain_utils//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
+load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 toolchain_type(
@@ -16,7 +16,7 @@ toolchain(
 toolchain_symlink_target(
     name = "script",
     target = select({
-        "@rules_toolchain//toolchain/constraint/os:windows": ":echo.bat",
+        "@toolchain_utils//toolchain/constraint/os:windows": ":echo.bat",
         "//conditions:default": ":echo.sh",
     }),
 )
@@ -42,7 +42,7 @@ toolchain_test(
 build_test(
     name = "entrypoint",
     target_compatible_with = [
-        "@rules_toolchain//toolchain/constraint/os:linux",
+        "@toolchain_utils//toolchain/constraint/os:linux",
     ],
     targets = ["@which-echo//:entrypoint"],
 )

@@ -7,7 +7,7 @@ This rule can be used to symlink a executable target and export the necessary to
 Often used with downloaded binary targets:
 
 ```py
-load("@rules_toolchain//toolchain/triplet:defs.bzl", "ToolchainTripletInfo")
+load("@toolchain_utils//toolchain/triplet:defs.bzl", "ToolchainTripletInfo")
 
 toolchain_type(
     name = "type",

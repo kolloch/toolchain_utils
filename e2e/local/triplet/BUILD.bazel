@@ -1,4 +1,4 @@
-load("@rules_toolchain//toolchain/triplet:local.bzl", "TRIPLET")
+load("@toolchain_utils//toolchain/triplet:local.bzl", "TRIPLET")
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
@@ -12,5 +12,5 @@ diff_test(
     name = "test",
     size = "small",
     file1 = ":expected",
-    file2 = "@rules_toolchain//toolchain/triplet:local",
+    file2 = "@toolchain_utils//toolchain/triplet:local",
 )

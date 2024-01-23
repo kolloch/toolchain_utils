@@ -68,7 +68,7 @@ def macro(*, toolchain_type):
     To provide the resolved toolchain create a `resolved.bzl` file:
 
     ```py
-    load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
+    load("@toolchain_utils//toolchain:resolved.bzl", _resolved = "export")
 
     DOC = _resolved.doc.format(toolchain="cp")
 

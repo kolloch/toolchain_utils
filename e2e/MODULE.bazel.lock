@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "fcb691c2ea50577edc395eeba55b61d73347497ed345776b4af6e246a6d484b1",
+  "moduleFileHash": "2efe8f961c3423407b29fe9d647d1f50ac6eae250f1a75ebeced5a1544ac1ad3",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -13,7 +13,7 @@
     "compatibilityMode": "ERROR"
   },
   "localOverrideHashes": {
-    "rules_toolchain": "903e61c59d8500c0616898a6fa8efbf2fd6c9b8936db0d502880b5ead514bb02",
+    "toolchain_utils": "e01702a35a30b773aa2e463937b5b38a593bb76f8c98f425e88b0f1336c25e00",
     "bazel_tools": "922ea6752dc9105de5af957f7a99a6933c0a6a712d23df6aad16a9c399f7e787"
   },
   "moduleDepGraph": {
@@ -50,7 +50,7 @@
           "devImports": [],
           "tags": [
             {
-              "tagName": "@rules_toolchain//toolchain/local/which:defs.bzl%toolchain_local_which",
+              "tagName": "@toolchain_utils//toolchain/local/which:defs.bzl%toolchain_local_which",
               "attributeValues": {
                 "name": "which-echo"
               },
@@ -62,7 +62,7 @@
               }
             },
             {
-              "tagName": "@rules_toolchain//toolchain/resolved:defs.bzl%toolchain_resolved",
+              "tagName": "@toolchain_utils//toolchain/resolved:defs.bzl%toolchain_resolved",
               "attributeValues": {
                 "toolchain_type": "//toolchain/echo:type",
                 "name": "resolved-echo"
@@ -147,7 +147,7 @@
               }
             },
             {
-              "tagName": "@rules_toolchain//toolchain/local/select:defs.bzl%toolchain_local_select",
+              "tagName": "@toolchain_utils//toolchain/local/select:defs.bzl%toolchain_local_select",
               "attributeValues": {
                 "map": {
                   "amd64-linux-gnu": "@fixture-amd64-linux-gnu",
@@ -171,7 +171,7 @@
           "hasNonDevUseExtension": true
         },
         {
-          "extensionBzlFile": "@rules_toolchain//toolchain/export:defs.bzl",
+          "extensionBzlFile": "@toolchain_utils//toolchain/export:defs.bzl",
           "extensionName": "toolchain_export",
           "usingModule": "<root>",
           "location": {
@@ -204,7 +204,7 @@
       ],
       "deps": {
         "bazel_skylib": "bazel_skylib@1.4.2",
-        "rules_toolchain": "rules_toolchain@_",
+        "toolchain_utils": "toolchain_utils@_",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
       }
@@ -240,20 +240,20 @@
         }
       }
     },
-    "rules_toolchain@_": {
-      "name": "rules_toolchain",
+    "toolchain_utils@_": {
+      "name": "toolchain_utils",
       "version": "0.0.0",
-      "key": "rules_toolchain@_",
-      "repoName": "rules_toolchain",
+      "key": "toolchain_utils@_",
+      "repoName": "toolchain_utils",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
       "extensionUsages": [
         {
           "extensionBzlFile": "//:MODULE.bazel",
           "extensionName": "_repo_rules",
-          "usingModule": "rules_toolchain@_",
+          "usingModule": "toolchain_utils@_",
           "location": {
-            "file": "@@rules_toolchain~override//:MODULE.bazel",
+            "file": "@@toolchain_utils~override//:MODULE.bazel",
             "line": 0,
             "column": 0
           },
@@ -270,7 +270,7 @@
               },
               "devDependency": false,
               "location": {
-                "file": "@@rules_toolchain~override//:MODULE.bazel",
+                "file": "@@toolchain_utils~override//:MODULE.bazel",
                 "line": 14,
                 "column": 8
               }
@@ -282,7 +282,7 @@
               },
               "devDependency": false,
               "location": {
-                "file": "@@rules_toolchain~override//:MODULE.bazel",
+                "file": "@@toolchain_utils~override//:MODULE.bazel",
                 "line": 20,
                 "column": 9
               }
@@ -862,19 +862,19 @@
   "moduleExtensions": {
     "//:MODULE.bazel%_repo_rules": {
       "general": {
-        "bzlTransitiveDigest": "yhXWMJMe1/CJCB4gbndH57UmbXrwaVKRur59txtFTcI=",
+        "bzlTransitiveDigest": "hbZzyE9nsHnAjBWz6wHACQ5LM1Hpm3bvSTklmVSuAyk=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
           "which-echo": {
-            "bzlFile": "@@rules_toolchain~override//toolchain/local/which:repository.bzl",
+            "bzlFile": "@@toolchain_utils~override//toolchain/local/which:repository.bzl",
             "ruleClassName": "which",
             "attributes": {
               "name": "_main~_repo_rules~which-echo"
             }
           },
           "resolved-echo": {
-            "bzlFile": "@@rules_toolchain~override//toolchain/resolved:repository.bzl",
+            "bzlFile": "@@toolchain_utils~override//toolchain/resolved:repository.bzl",
             "ruleClassName": "resolved",
             "attributes": {
               "toolchain_type": "@@//toolchain/echo:type",
@@ -924,7 +924,7 @@
             }
           },
           "fixture": {
-            "bzlFile": "@@rules_toolchain~override//toolchain/local/select:repository.bzl",
+            "bzlFile": "@@toolchain_utils~override//toolchain/local/select:repository.bzl",
             "ruleClassName": "select",
             "attributes": {
               "map": {
@@ -1571,41 +1571,41 @@
         ]
       }
     },
-    "@@rules_toolchain~override//:MODULE.bazel%_repo_rules": {
+    "@@toolchain_utils~override//:MODULE.bazel%_repo_rules": {
       "general": {
         "bzlTransitiveDigest": "N8Ehl02dLIrmCn7Ff5iLyKwfbBa0ZnVCw5quAS8d+Yw=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
           "local": {
-            "bzlFile": "@@rules_toolchain~override//toolchain/local/triplet:repository.bzl",
+            "bzlFile": "@@toolchain_utils~override//toolchain/local/triplet:repository.bzl",
             "ruleClassName": "triplet",
             "attributes": {
-              "name": "rules_toolchain~override~_repo_rules~local"
+              "name": "toolchain_utils~override~_repo_rules~local"
             }
           },
           "launcher": {
-            "bzlFile": "@@rules_toolchain~override//toolchain/launcher:repository.bzl",
+            "bzlFile": "@@toolchain_utils~override//toolchain/launcher:repository.bzl",
             "ruleClassName": "launcher",
             "attributes": {
-              "name": "rules_toolchain~override~_repo_rules~launcher"
+              "name": "toolchain_utils~override~_repo_rules~launcher"
             }
           }
         },
         "recordedRepoMappingEntries": []
       }
     },
-    "@@rules_toolchain~override//toolchain/export:defs.bzl%toolchain_export": {
+    "@@toolchain_utils~override//toolchain/export:defs.bzl%toolchain_export": {
       "general": {
-        "bzlTransitiveDigest": "BzNop8Xd2QfFtwy+F4thyq9O+CpaFjHeMWKDF15GMaM=",
+        "bzlTransitiveDigest": "laNB//SXZSomxqiHzcH66mX9T1eNTZTOpVZf1HIpUoE=",
         "accumulatedFileDigests": {},
         "envVariables": {},
         "generatedRepoSpecs": {
           "export": {
-            "bzlFile": "@@rules_toolchain~override//toolchain/export/symlink:repository.bzl",
+            "bzlFile": "@@toolchain_utils~override//toolchain/export/symlink:repository.bzl",
             "ruleClassName": "symlink",
             "attributes": {
-              "name": "rules_toolchain~override~toolchain_export~export",
+              "name": "toolchain_utils~override~toolchain_export~export",
               "target": "@@_main~_repo_rules~fixture//:fixture"
             }
           }

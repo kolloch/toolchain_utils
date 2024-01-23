@@ -1,4 +1,4 @@
-# `rules_toolchain`
+# `toolchain_utils`
 
 > A Bazel ruleset to enable concise toolchain registration.
 
@@ -7,12 +7,12 @@
 Add the following to `MODULE.bazel`:
 
 ```py
-which = use_repo_rule("@rules_toolchain//toolchain/local/which:defs.bzl", "toolchain_local_which")
+which = use_repo_rule("@toolchain_utils//toolchain/local/which:defs.bzl", "toolchain_local_which")
 which(
     name = "which-echo",
 )
 
-resolved = use_repo_rule("@rules_toolchain//toolchain/resolved:defs.bzl", "toolchain_resolved")
+resolved = use_repo_rule("@toolchain_utils//toolchain/resolved:defs.bzl", "toolchain_resolved")
 resolved(
     name = "resolved-echo",
     toolchain_type = "//toolchain/echo:type",
@@ -22,7 +22,7 @@ resolved(
 Create a `toolchain/echo/BUILD.bazel` with the following:
 
 ```py
-load("@rules_toolchain//toolchain/test:defs.bzl", "toolchain_test")
+load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
 
 # The `toolchain/echo:type` for registration
 toolchain_type(
@@ -58,7 +58,7 @@ toolchain_test(
 To create a hermetic toolchain from a built target:
 
 ```py
-load("@rules_toolchain//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
+load("@toolchain_utils//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
 
 # Assumes that `:echo` points to a Bazel built `echo` binary
 toolchain_symlink_target(
@@ -77,7 +77,7 @@ toolchain(
 To create a hermetic toolchain from a downloaded target:
 
 ```py
-load("@rules_toolchain//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
+load("@toolchain_utils//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
 
 # Create the necessary toolchain providers around the downloaded target
 toolchain_symlink_target(
@@ -92,10 +92,10 @@ toolchain(
     toolchain_type = ":type",
     # Use constraints to signify what host machines the toolchain is compatible with
     exec_compatible_with = [
-        "@rules_toolchain//toolchain/constraint/cpu:arm64",
-        "@rules_toolchain//toolchain/constraint/os:linux",
+        "@toolchain_utils//toolchain/constraint/cpu:arm64",
+        "@toolchain_utils//toolchain/constraint/os:linux",
         # Bazel _assumes_ `glibc` for Linux
-        # "@rules_toolchain//toolchain/constraint/libc:gnu",
+        # "@toolchain_utils//toolchain/constraint/libc:gnu",
     ],
 )
 ```

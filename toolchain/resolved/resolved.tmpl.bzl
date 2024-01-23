@@ -1,4 +1,4 @@
-load("@rules_toolchain//toolchain:resolved.bzl", _resolved = "export")
+load("@toolchain_utils//toolchain:resolved.bzl", _resolved = "export")
 
 DOC = _resolved.doc
 

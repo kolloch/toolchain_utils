@@ -53,7 +53,7 @@ The resulting provider can be used in other rules to understand triplet values.
 
 Running the target with `bazel run` will result in the triplet being printed.
 
-The triplet runnable output is particularly useful for the resolved host triplet at `@rules_toolchain//toolchain/triplet:host`
+The triplet runnable output is particularly useful for the resolved host triplet at `@toolchain_utils//toolchain/triplet:host`
 """,
     attrs = ATTRS,
     implementation = implementation,

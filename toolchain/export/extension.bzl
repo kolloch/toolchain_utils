@@ -23,7 +23,7 @@ download_archive(
     ...,
 )
 
-toolchain_select = use_extension("@rules_toolchain//toolchain/select:defs.bzl", "toolchain_select")
+toolchain_select = use_extension("@toolchain_utils//toolchain/select:defs.bzl", "toolchain_select")
 toolchain_select(
     name = "python-local",
     map = {
@@ -31,7 +31,7 @@ toolchain_select(
     }
 )
 
-export = use_extension("@rules_toolchain//toolchain/export:defs.bzl", "export")
+export = use_extension("@toolchain_utils//toolchain/export:defs.bzl", "export")
 export.symlink(
     name = "python",
     target = "@python-local",
@@ -47,7 +47,7 @@ some_hermetic_repository_rule(
 The _same_ downloaded Python interpreter can be used in another Bazel module:
 
 ```py
-export = use_extension("@rules_toolchain//toolchain/export:defs.bzl", "export")
+export = use_extension("@toolchain_utils//toolchain/export:defs.bzl", "export")
 use_repo(export, "python")
 
 some_other_hermetic_repository_rule(
