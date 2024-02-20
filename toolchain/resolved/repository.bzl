@@ -33,10 +33,12 @@ ATTRS = _ATTRS | {
 }
 
 def implementation(rctx):
+    target = rctx.attr.target or rctx.attr.name.rsplit("~", 1)[1]
+    basename = rctx.attr.basename or target.removeprefix("resolved-")
     substitutions = {
         "{{toolchain_type}}": str(rctx.attr.toolchain_type),
-        "{{basename}}": str(rctx.attr.basename),
-        "{{target}}": rctx.attr.target or rctx.attr.name.rsplit("~", 1)[1],
+        "{{basename}}": basename,
+        "{{target}}": target,
     }
     rctx.template("resolved.bzl", rctx.attr.resolved, substitutions, executable = False)
     rctx.template("BUILD.bazel", rctx.attr.build, substitutions, executable = False)
