@@ -129,4 +129,21 @@ genrule(
 )
 ```
 
+## Hermeticity
+
+### POSIX
+
+On POSIX systems, this ruleset is entirely hermetic and only requires a POSIX compatible shell and `/usr/bin/env` to find that shell.
+
+### NT
+
+The rule set has Batch implementation on Windows so does not require Bash.
+
+A binary Windows launcher is created by compiling [C# code][launcher-cs] with the .NET `csc`. This is provided by the base install of Windows.
+
+The `toolchain_test` uses the `FC.exe` binary to compare `stdout`/`stderr` of toolchain binaries. This is provided in the base install of Windows.
+
+Effectively, the ruleset is hermetic.
+
+[launcher-cs]: toolchain/launcher/launcher.cs
 [resolved]: https://github.com/bazelbuild/bazel/issues/14009
