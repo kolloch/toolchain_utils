@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /usr/bin/env sh
 
 # e: quit on command errors
 # u: quit on undefined variables
