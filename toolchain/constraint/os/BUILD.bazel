@@ -14,3 +14,18 @@ alias(
     name = "macos",
     actual = "@platforms//os:macos",
 )
+
+alias(
+    name = "netbsd",
+    actual = "@platforms//os:netbsd",
+)
+
+alias(
+    name = "freebsd",
+    actual = "@platforms//os:freebsd",
+)
+
+alias(
+    name = "openbsd",
+    actual = "@platforms//os:openbsd",
+)
