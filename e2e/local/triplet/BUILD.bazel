@@ -1,5 +1,5 @@
 load("@toolchain_utils//toolchain/triplet:local.bzl", "TRIPLET")
-load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@rules_diff//diff/file/test:defs.bzl", "diff_file_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
 write_file(
@@ -8,9 +8,9 @@ write_file(
     content = [TRIPLET.value],
 )
 
-diff_test(
+diff_file_test(
     name = "test",
     size = "small",
-    file1 = ":expected",
-    file2 = "@toolchain_utils//toolchain/triplet:local",
+    a = ":expected",
+    b = "@toolchain_utils//toolchain/triplet:local",
 )
