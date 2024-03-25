@@ -73,4 +73,8 @@ export.symlink(
     name = "export",
     target = "@fixture",
 )
+export.symlink(
+    name = "export",
+    target = "@fixture",
+)
 use_repo(export, "export")

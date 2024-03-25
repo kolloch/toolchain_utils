@@ -73,9 +73,21 @@ TAGS = {
 }
 
 def implementation(mctx):
+    symlinks = {}
+
     for mod in mctx.modules:
-        for d in mod.tags.symlink:
-            _symlink(name = d.name, **{a: getattr(d, a) for a in _ATTRS})
+        for tag in mod.tags.symlink:
+            attrs = {a: getattr(tag, a) for a in _ATTRS}
+            if tag.name not in symlinks:
+                symlinks[tag.name] = (mod, attrs)
+                continue
+
+            m, a = symlinks[tag.name]
+            if a != attrs:
+                fail("`{}@{}` exports `{}` but it is already exported with different attributes by `{}@{}`".format(mod.name, mod.version or "<version>", tag.name, m.name, m.version or "<version>"))
+
+    for name, (_, attrs) in symlinks.items():
+        _symlink(name = name, **attrs)
 
 export = module_extension(
     doc = DOC,
