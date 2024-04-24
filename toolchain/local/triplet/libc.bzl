@@ -39,13 +39,15 @@ def _ldd(rctx, path):
         })
         return VersionedInfo("musl.{}".format(version))
 
-    if first.startswith("ldd") and "Free Software Foundation" in second:
+    if first.startswith("ldd"):
         _, _, description = first.partition(" (")
         description, _, version = description.rpartition(") ")
-        version = version
 
         if description == "GNU libc" or "GLIBC" in description:
             return VersionedInfo("gnu.{}".format(version))
+
+        if description == "cygwin":
+            return VersionedInfo("cygwin.{}".format(version))
 
     fail("Failed to detect `{}` version:\n{}".format(path, result.stdout))
 

@@ -164,13 +164,13 @@ def os(rctx):
     if path:
         return _sw_vers(rctx, path)
 
-    path = rctx.which("uname")
-    if path:
-        return _uname(rctx, path)
-
     path = rctx.which("cmd.exe")
     if path:
         return _cmd(rctx, path)
+
+    path = rctx.which("uname")
+    if path:
+        return _uname(rctx, path)
 
     return VersionedInfo({
         "linux": "linux",
