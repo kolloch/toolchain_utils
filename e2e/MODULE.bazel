@@ -47,6 +47,10 @@ fixture(
 )
 
 fixture(
+    name = "fixture-windows-cygwin",
+)
+
+fixture(
     name = "fixture-arm64-macos-darwin",
 )
 
@@ -63,6 +67,7 @@ select(
         "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
         "arm-linux-musl": "@fixture-arm-linux-musl",
         "windows-ucrt": "@fixture-windows-ucrt",
+        "windows-cygwin": "@fixture-windows-cygwin",
         "arm64-macos-darwin": "@fixture-arm64-macos-darwin",
         "amd64-macos-darwin": "@fixture-amd64-macos-darwin",
     },

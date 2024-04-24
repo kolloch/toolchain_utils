@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "3dba05875204a8c12058eb833ae8614e59ee906a51c180a9719e839c132584a4",
+  "moduleFileHash": "1c0376cff26f40c4e0d5f5d348c8ac14282bd88181df2b5549efafe92187ff16",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -43,6 +43,7 @@
             "fixture-arm64-linux-gnu": "fixture-arm64-linux-gnu",
             "fixture-arm-linux-musl": "fixture-arm-linux-musl",
             "fixture-windows-ucrt": "fixture-windows-ucrt",
+            "fixture-windows-cygwin": "fixture-windows-cygwin",
             "fixture-arm64-macos-darwin": "fixture-arm64-macos-darwin",
             "fixture-amd64-macos-darwin": "fixture-amd64-macos-darwin",
             "fixture": "fixture"
@@ -125,7 +126,7 @@
             {
               "tagName": "//test/fixture:repository.bzl%fixture",
               "attributeValues": {
-                "name": "fixture-arm64-macos-darwin"
+                "name": "fixture-windows-cygwin"
               },
               "devDependency": false,
               "location": {
@@ -137,12 +138,24 @@
             {
               "tagName": "//test/fixture:repository.bzl%fixture",
               "attributeValues": {
-                "name": "fixture-amd64-macos-darwin"
+                "name": "fixture-arm64-macos-darwin"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
                 "line": 53,
+                "column": 8
+              }
+            },
+            {
+              "tagName": "//test/fixture:repository.bzl%fixture",
+              "attributeValues": {
+                "name": "fixture-amd64-macos-darwin"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 57,
                 "column": 8
               }
             },
@@ -154,6 +167,7 @@
                   "arm64-linux-gnu": "@fixture-arm64-linux-gnu",
                   "arm-linux-musl": "@fixture-arm-linux-musl",
                   "windows-ucrt": "@fixture-windows-ucrt",
+                  "windows-cygwin": "@fixture-windows-cygwin",
                   "arm64-macos-darwin": "@fixture-arm64-macos-darwin",
                   "amd64-macos-darwin": "@fixture-amd64-macos-darwin"
                 },
@@ -162,7 +176,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 59,
+                "line": 63,
                 "column": 7
               }
             }
@@ -176,7 +190,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 71,
+            "line": 76,
             "column": 23
           },
           "imports": {
@@ -193,7 +207,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 72,
+                "line": 77,
                 "column": 15
               }
             },
@@ -206,7 +220,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 76,
+                "line": 81,
                 "column": 15
               }
             }

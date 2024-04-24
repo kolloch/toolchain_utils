@@ -69,6 +69,8 @@ def implementation(ctx):
     extension = target.extension
     if extension in (".bat", ".cmd"):
         basename = basename + extension
+    elif extension in ("bat", "cmd"):
+        basename = "{}.{}".format(basename, extension)
     elif not extension and "." not in basename and ctx.target_platform_has_constraint(windows):
         basename = "{}.exe".format(basename)
 
