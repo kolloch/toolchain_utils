@@ -1,5 +1,19 @@
 include:
   - component: "${CI_SERVER_HOST}/ci/component/bazelisk/bazelisk@v1.0.0-beta.3"
+    inputs:
+      variables: |
+        CI_PROJECT_DIR
+        CI_PROJECT_ID
+        CI_REMOTE_EXECUTOR
+        CI_REMOTE_CACHE
+        CI_REMOTE_HEADER
+        CI_REMOTE_JOBS
+        CI_BES_RESULTS_URL
+        CI_BES_BACKEND
+        CI_PROJECT_URL
+        CI_COMMIT_REF_NAME
+        CI_COMMIT_SHA
+        CI_SERVER_HOST
 
 default:
   tags:
@@ -10,8 +24,13 @@ test:
   parallel:
     matrix:
       - ROOT:
-          - .
-          - e2e
+        - .
+        - e2e
+        CONFIG:
+        - local
+        - remote
+  script:
+    - cd "${ROOT}"; bazelisk test --config="${CONFIG}" //...
 
 # TODO: switch this out for `rules_semantic_release`
 semantic-release:
