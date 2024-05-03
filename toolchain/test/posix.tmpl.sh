@@ -95,7 +95,7 @@ diff() (
       printf '  </testcase>\n'
       exit
     elif test "${FAILS}" -eq 2; then
-      exit
+      break
     elif test "${A}" != "${B}"; then
       printf >&2 'not ok %i: %s had different content to %s\n' "${INDEX}" "${FILEPATH}" "${EXPECTED}"
       printf '  <testcase name="%s">\n' "${FILEPATH}"
