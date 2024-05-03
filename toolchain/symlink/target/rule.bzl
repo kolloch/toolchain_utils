@@ -85,8 +85,9 @@ def implementation(ctx):
         variable: executable.path,
     })
 
-    runfiles = ctx.runfiles(ctx.attr.data + [executable])
+    runfiles = ctx.runfiles([executable])
     runfiles = runfiles.merge(ctx.attr.target.default_runfiles)
+    runfiles = runfiles.merge_all([d[DefaultInfo].default_runfiles for d in ctx.attr.data])
 
     default = DefaultInfo(
         executable = executable,
