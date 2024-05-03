@@ -2,13 +2,11 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 
 visibility("//toolchain/...")
 
-DOC = """Creates a executable symlink to a binary path.
+DOC = """Creates an executable symlink to a binary path.
 
 This rule can be used to symlink a executable file outside of the workspace.
 
 The external executable become part of the Bazel target graph.
-
-It exports the necessary providers for the target to be easily ingested by the native `toolchain` rule.
 
 ```
 toolchain_type(
@@ -20,9 +18,14 @@ toolchain_symlink_path(
     path = "/usr/bin/gcc",
 )
 
+toolchain_symlink_target(
+    name = "gcc",
+    target = "gcc-local",
+)
+
 toolchain(
     name = "local",
-    toolchain = ":gcc-local",
+    toolchain = ":gcc",
     toolchain_type = ":type",
 )
 ```
@@ -85,32 +88,19 @@ def implementation(ctx):
             target_path = ctx.attr.path,
         )
 
-    variables = platform_common.TemplateVariableInfo({
-        variable: executable.path,
-    })
+    runfiles = ctx.runfiles([executable])
+    runfiles.merge_all([d[DefaultInfo].default_runfiles for d in ctx.attr.data])
 
-    default = DefaultInfo(
+    return DefaultInfo(
         executable = executable,
         files = depset([executable]),
-        runfiles = ctx.runfiles(ctx.attr.data + [executable]),
+        runfiles = runfiles,
     )
-
-    toolchain = platform_common.ToolchainInfo(
-        variables = variables,
-        default = default,
-        executable = executable,
-    )
-
-    return [variables, toolchain, default]
 
 path = rule(
     doc = DOC,
     attrs = ATTRS,
     implementation = implementation,
-    provides = [
-        platform_common.TemplateVariableInfo,
-        platform_common.ToolchainInfo,
-        DefaultInfo,
-    ],
+    provides = [DefaultInfo],
     executable = True,
 )

@@ -50,10 +50,6 @@ ATTRS = {
     "variable": attr.string(
         doc = "The variable name for Make or the execution environment. Defaults to `basename.upper()`",
     ),
-    "data": attr.label_list(
-        doc = "Extra files that are needed at runtime.",
-        allow_files = True,
-    ),
     "_windows": attr.label(
         providers = [platform_common.ConstraintValueInfo],
         default = "//toolchain/constraint/os:windows",
@@ -87,7 +83,6 @@ def implementation(ctx):
 
     runfiles = ctx.runfiles([executable, ctx.executable.target])
     runfiles = runfiles.merge(ctx.attr.target.default_runfiles)
-    runfiles = runfiles.merge_all([d[DefaultInfo].default_runfiles for d in ctx.attr.data])
 
     default = DefaultInfo(
         executable = executable,
@@ -97,8 +92,9 @@ def implementation(ctx):
 
     toolchain = platform_common.ToolchainInfo(
         variables = variables,
-        default = default,
-        executable = executable,
+        default = ctx.attr.target[DefaultInfo],
+        executable = ctx.executable.target,
+        files_to_run = ctx.attr.target.files_to_run,
     )
 
     return [variables, toolchain, default]
