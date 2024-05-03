@@ -94,7 +94,7 @@ def implementation(ctx):
         variables = variables,
         default = ctx.attr.target[DefaultInfo],
         executable = ctx.executable.target,
-        files_to_run = ctx.attr.target.files_to_run,
+        run = ctx.attr.target.files_to_run or ctx.executable.target,
     )
 
     return [variables, toolchain, default]
