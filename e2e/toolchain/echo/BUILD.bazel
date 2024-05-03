@@ -1,4 +1,4 @@
-load("@toolchain_utils//toolchain/symlink/target:defs.bzl", "toolchain_symlink_target")
+load("@toolchain_utils//toolchain/info:defs.bzl", "toolchain_info")
 load("@toolchain_utils//toolchain/test:defs.bzl", "toolchain_test")
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
@@ -13,7 +13,7 @@ toolchain(
     toolchain_type = ":type",
 )
 
-toolchain_symlink_target(
+toolchain_info(
     name = "script",
     target = select({
         "@toolchain_utils//toolchain/constraint/os:windows": ":echo.bat",
