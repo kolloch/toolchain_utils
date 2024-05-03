@@ -1,5 +1,5 @@
 load("@toolchain_utils//toolchain/triplet:local.bzl", "TRIPLET")
-load("@rules_diff//diff/file/test:defs.bzl", "diff_file_test")
+load("//diff/file/test:defs.bzl", "diff_file_test")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
 write_file(

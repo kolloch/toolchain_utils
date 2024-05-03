@@ -1,4 +1,4 @@
-load("@rules_diff//diff/file/test:defs.bzl", "diff_file_test")
+load("//diff/file/test:defs.bzl", "diff_file_test")
 
 diff_file_test(
     name = "hello-world",

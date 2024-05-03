@@ -5,7 +5,6 @@ module(
     ],
 )
 
-bazel_dep(name = "rules_diff", version = "1.0.0-beta.2")
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(name = "toolchain_utils", version = "0.0.0")
 local_path_override(
