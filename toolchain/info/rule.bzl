@@ -73,7 +73,7 @@ def implementation(ctx):
     )
 
     variables = platform_common.TemplateVariableInfo({
-        variable: executable.path,
+        variable: ctx.executable.target.path,
     })
 
     runfiles = ctx.runfiles([executable, ctx.executable.target])
