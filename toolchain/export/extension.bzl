@@ -1,3 +1,4 @@
+load("@bazel_features//:features.bzl", "bazel_features")
 load("//toolchain/export/symlink:repository.bzl", _ATTRS = "ATTRS", _DOC = "DOC", _symlink = "symlink")
 
 visibility("//toolchain/export/...")
@@ -88,6 +89,11 @@ def implementation(mctx):
 
     for name, (_, attrs) in symlinks.items():
         _symlink(name = name, **attrs)
+
+    if bazel_features.external_deps.extension_metadata_has_reproducible:
+        return mctx.extension_metadata(reproducible = True)
+    else:
+        return None
 
 export = module_extension(
     doc = DOC,
