@@ -1,6 +1,3 @@
-# Enable `bzlmod`
-common --enable_bzlmod
-
 # Build cache
 build --experimental_guard_against_concurrent_changes
 
