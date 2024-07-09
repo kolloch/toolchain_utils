@@ -85,11 +85,19 @@ def implementation(ctx):
         runfiles = runfiles,
     )
 
+    env = {}
+    inherited = ()
+    if RunEnvironmentInfo in ctx.attr.target:
+        env = ctx.attr.target[RunEnvironmentInfo].environment
+        inherited = tuple(ctx.attr.target[RunEnvironmentInfo].inherited_environment)
+
     toolchain = platform_common.ToolchainInfo(
         variables = variables,
         default = ctx.attr.target[DefaultInfo],
         executable = ctx.executable.target,
         run = ctx.attr.target.files_to_run or ctx.executable.target,
+        env = env,
+        inheritied = inherited,
     )
 
     return [variables, toolchain, default]
