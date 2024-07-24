@@ -106,7 +106,7 @@ def _uname(rctx, path):
     if result.return_code != 0:
         fail("Failed to get `uname` release: {}".format(result.stderr))
 
-    version, _ = result.stdout.split("-", 1)
+    version = result.stdout.strip().split("-", 1)[0]
 
     major, minor, patch = split(version, ".", {
         3: lambda x, y, z: (x, y, z),
